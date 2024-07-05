@@ -1,0 +1,40 @@
+.Wrapper {
+  height: 44px;
+
+  background: #FFFFFF;
+  padding: 0 16px;
+  padding-right: 0;
+  border: 1px solid rgba(198, 203, 209, 0.3);
+  box-sizing: border-box;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.Input {
+  flex-grow: 2;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.SearchIconWrapper {
+  height: 100%;
+  // background-color: #EEE;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width: 24px;
+  padding-right: 16px;
+  padding-left: 8px;
+}
+
+.SearchIcon {
+  display: block;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+}

@@ -1,0 +1,64 @@
+$fadeDuration: 382ms;
+
+:export {
+  fadeDuration: $fadeDuration;
+}
+
+@keyframes fadeInMask {
+  0% { background-color: rgba(0, 0, 0, 0) }
+  100% { background-color: rgba(0, 0, 0, 0.382) }
+}
+@keyframes fadeOutMask {
+  0% { background-color: rgba(0, 0, 0, 0.382) }
+  100% { background-color: rgba(0, 0, 0, 0) }
+}
+
+.DrawerLayout {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  transition: background-color $fadeDuration;
+
+  animation-name: fadeInMask;
+  animation-duration: $fadeDuration;
+  animation-fill-mode: forwards;
+
+  z-index: 10001;
+}
+.fadeInMask {
+  // animation-name: fadeInMask;
+}
+.fadeOutMask {
+  animation-name: fadeOutMask;
+}
+
+@keyframes fadeOut {
+  0% { transform: translateY(0%) }
+  100% { transform: translateY(100%) }
+}
+@keyframes fadeIn {
+  0% { transform: translateY(100%) }
+  100% { transform: translateY(0%) }
+}
+
+.DrawerLayout .body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 100vw;
+  animation-name: fadeIn;
+  animation-duration: $fadeDuration;
+  animation-fill-mode: forwards;
+  // color: #333;
+  // background-color: white;
+}
+.DrawerLayout .bodyFadeOut {
+  animation-name: fadeOut;
+}
+// .DrawerLayout .bodyFadeIn {
+//   /* animation: fadeIn 382ms; */
+//   animation-name: fadeIn;
+// }

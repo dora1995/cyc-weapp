@@ -1,0 +1,88 @@
+.SearchArea {
+  padding: 37rpx 40rpx;
+}
+.searchRow {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.searchTitle {
+  font-size: 16px;
+  width: 70px;
+  text-align: right;
+  margin-right: 10px;
+  color: #4B5B6D;
+}
+.seatchSelect {
+  flex: 1;
+}
+.intoQr {
+  width: 100%;
+  text-align: center;
+  font-size: 0;
+}
+.intoQrImg {
+  width: 100%;
+}
+.btns {
+  background: #EEEFF1;
+  padding: 30rpx 40rpx;
+  display: flex;
+  .btn {
+    display: flex;
+    font-size: 30rpx;
+    color: #4B5B6D;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    .img {
+      width: 60rpx;
+      height: 60rpx;
+      margin-right: 16rpx;
+    }
+  }
+  .shareBtn {
+    flex: 1;
+    background: #EEEFF1;
+    box-shadow: none;
+    padding: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    &::after {
+      border: none;
+    }
+  }
+}
+.newLocation {
+  width: 100%;
+  margin-top: 10rpx;
+  color: #4B5B6D;
+  font-size: 28rpx;
+  text-align: left;
+}
+.ad{
+  max-height: 540px;
+  .SelectList {
+    width: 250px;
+    max-height: 375px;
+    border-radius: 4px;
+    
+  }
+  .closeBtn{
+    margin-top: 20px;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: center;
+    .btn{
+      width: 100px;
+      display: flex;
+      height: 25px;
+      align-items: center;
+      justify-content: center;
+      background-color: #07c160;
+      color: #fff;
+      border-radius: 4px;
+    }
+  }
+}

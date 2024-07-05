@@ -1,0 +1,52 @@
+.BindUserInfo {
+  width: 300px;
+  height: 238px;
+  background-color: white;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+
+  position: relative;
+}
+
+.Logo {
+  display: block;
+  width: 77px;
+  height: 24px;
+}
+
+.Title {
+  margin-top: 21px;
+
+  font-size: 21px;
+  line-height: 1em;
+  font-weight: 500;
+  color: #333333;
+}
+
+.Summary {
+  margin-top: 15px;
+
+  font-size: 15px;
+  line-height: 1em;
+  font-weight: 400;
+  color: #999999;
+  line-height: 22px;
+}
+
+.UpdateUserButton {
+  margin-top: 30px;
+}
+
+.CloseUpdateUserInfoWindow {
+  width: 23px;
+  height: 23px;
+
+  position: absolute;
+  left: calc(100% - 3px);
+  top: -34px;
+}

@@ -1,0 +1,52 @@
+.WindowInner {
+  width: 287px;
+  padding: 20px 26px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.TitleWrapper {
+  font-size: 19px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.BodyWrapper {
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+
+  padding-top: 30px;
+}
+
+.ButtonGroup {
+  margin-top: 30px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+
+  .Button {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    min-width: 110px;
+    border-radius: 6px;
+
+    &.Cancel {
+      margin-right: 15px;
+      box-sizing: border-box;
+      border: 1px solid #4A81F2;
+      line-height: 40px - 1px * 2;
+      color: #4A81F2;
+    }
+
+    &.Confirm {
+      color: white;
+      // background: linear-gradient(90.14deg,#1567e2 .09%,#1099e6 99.86%);
+      background: #4A81F2;
+    }
+  }
+}

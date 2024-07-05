@@ -1,0 +1,84 @@
+.HeadBlock {
+  width: 100%;
+  // display: flex;
+  // flex-direction: column;
+  // height: 216px;
+  background: linear-gradient(90.14deg, #1567E2 0.09%, #1099E6 99.86%);
+  position: relative;
+  overflow: hidden;
+  // padding-top: 160rpx;
+}
+.top {
+  flex: 1
+}
+
+.MatrixPointImage {
+  width: 279px;
+  height: 135px;
+  position: absolute;
+  top: 160rpx;
+  right: 10rpx;
+}
+
+.imgG {
+  display: flex;
+  // justify-content: center;
+  margin-top: 10rpx;
+  align-items: center;
+  padding-left: 30rpx;
+  margin-bottom: 34rpx;
+}
+.LogoImageZ {
+  width: 244rpx;
+  height: 75rpx;
+  margin-right: 20rpx;
+}
+.LogoImage {
+  width: 247.5rpx;
+  height: 75rpx;
+}
+
+.TabArea {
+  background-color: white;
+  box-sizing: border-box;
+  width: 100%;
+  // height: 64px;
+  border-top-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 30rpx;
+}
+.TabItem {
+  flex: 1;
+  position: relative;
+  text-align: center;
+  font-weight: 400;
+  .tabIcon {
+    width: 90rpx;
+    height: 90rpx;
+    margin-bottom: 20rpx;
+  }
+  .tabText {
+    font-size: 36rpx;
+    color: #99A4B7;
+  }
+  .TabHighlight {
+    font-weight: 500;
+    color: #4B5B6D;
+  }
+}
+
+
+.HighlightLine {
+  position: absolute;
+  bottom: -30rpx;
+  left: 0;
+  width: 100%;
+  height: 6rpx;
+  background-color: #3483FA;
+  border-radius: 3px;
+}

@@ -1,0 +1,51 @@
+.Wrapper {
+  height: 44px;
+
+  background: #FFFFFF;
+  padding: 0 16px;
+  border: 1px solid rgba(198, 203, 209, 0.3);
+  box-sizing: border-box;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.Current {
+  flex-grow: 2;
+  font-size: 17px;
+  line-height: 24px;
+}
+
+.Icon {
+  display: block;
+  min-width: 24px;
+  width: 14px;
+  height: 11px;
+}
+
+.SelectList {
+  background-color: white;
+  width: 250px;
+
+  border-radius: 4px;
+
+  max-height: 300px;
+}
+
+.ListItem {
+  font-size: 17px;
+  line-height: 48px;
+  color: #475C6F;
+  width: 100%;
+  text-align: left;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border-bottom: solid 1px rgba(198, 203, 209, 0.3);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}

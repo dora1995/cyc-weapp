@@ -1,0 +1,94 @@
+$timing: 182ms;
+:export {
+  timing: $timing
+}
+
+.WindowLayoutWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+@keyframes bgFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes bgFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.BGMask.ModalFadeOut {
+  animation: bgFadeOut $timing;
+}
+.BGMask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.WindowLayout {
+  animation: bgFadeIn $timing;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+
+  // background-color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+
+  z-index: 10000;
+}
+
+@keyframes windowFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+    transform-origin: bottom center;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: bottom center;
+  }
+}
+@keyframes windowFadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: bottom center;
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+    transform-origin: bottom center;
+  }
+}
+.Window.WindowFadeOut {
+  animation: windowFadeOut $timing;
+}
+.Window {
+  animation: windowFadeIn $timing;
+}

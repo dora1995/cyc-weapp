@@ -1,0 +1,71 @@
+$padding-horizontal: 10px;
+
+:export {
+  NAV_BAR_PADDING_BOTTOM: 10px;
+}
+
+.NavBarWrapper {
+  padding-left: $padding-horizontal;
+  padding-right: $padding-horizontal;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.NavBar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  // box-sizing: border-box;
+  // width: calc(100vw - #{$padding-horizontal} * 2);
+  // width: 100vw;
+
+  background: #34313d;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: $padding-horizontal 0;
+  height: 30px;
+  z-index: 9999;
+}
+
+.MiddleTitle {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  line-height: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.LeftIconWrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+.LeftIcon {
+  display: block;
+  width: 9px;
+  height: 15px;
+}
+.LeftIconTapArea {
+  position: absolute;
+  left: -$padding-horizontal;
+  bottom: -$padding-horizontal;
+
+  width: calc(100% + #{$padding-horizontal} * 3);
+  height: calc(100% + #{$padding-horizontal} * 2);
+
+  // background-color: red;
+}

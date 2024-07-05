@@ -1,0 +1,31 @@
+.Wrapper {
+  padding: 104px 0;
+}
+
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Image {
+  display: block;
+  margin: auto;
+  width: 42px;
+  height: 42px;
+
+  animation: rotating 500ms infinite;
+  animation-timing-function: linear;
+}
+
+.Label {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 21px;
+
+  color: #96A5B9;
+  text-align: center;
+}

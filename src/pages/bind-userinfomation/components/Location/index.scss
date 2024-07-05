@@ -1,0 +1,29 @@
+.Locate {
+  background: rgba(198, 203, 209, 0.08);
+  border-radius: 10px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+
+  min-height: 44px;
+  margin-top: 24px;
+  width: 100%;
+}
+
+.LocateIcon {
+  display: block;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.LocateLabel {
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 24px;
+  color: #3483FA;
+  margin-left: 6px;
+}

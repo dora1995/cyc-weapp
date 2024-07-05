@@ -1,0 +1,189 @@
+$padding-horizontal: 40rpx;
+
+$MAP_WIDTH: 100vw;
+$MAP_HEIGHT: 400rpx;
+.MapArea {
+  width: $MAP_WIDTH;
+  height: $MAP_HEIGHT;
+  background-color: rgb(244, 244, 244);
+  position: relative;
+}
+.Map {
+  width: 100%;
+  height: 100%;
+}
+
+.CentreView {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  max-width: calc(100vw - 80px);
+  // max-width: 100vw;
+  // left: calc(#{$MAP_WIDTH} / 2 - 204px / 2);
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 20px));
+  // transform: translate(20px, -50%);
+  background-color: #fff;
+  padding: 20rpx;
+  border: 1px solid #EEEFF1;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.16);
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    bottom: 1px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-top: 10px solid #fff;
+    border-right: 6px solid transparent;
+    transform: translate(-50%, 100%);
+  }
+}
+.MessageBackgroundImage {
+  width: 30px;
+  height: 30px;
+  margin-left: 24rpx;
+}
+.bannerImg{
+  width: 100%;
+  border-radius: 8px;
+}
+.Label {
+  // min-width: 100px;
+  // max-width: 350px;
+  flex: 1;
+  font-weight: 40rpx;
+  color: #000000;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-style: normal;
+  font-weight: 500;
+}
+.Navigate {
+  margin-top: 8px;
+  background: #F1A159;
+  border-radius: 5px;
+  color: white;
+  line-height: 28px;
+  min-width: 102px;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.InfoAbove {
+  border-bottom: solid 1px #F2F2F2;
+}
+
+.SchoolName {
+  padding: 0 $padding-horizontal;
+  padding-top: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42rpx;
+  line-height: 28px;
+  color: #4B5B6D;
+}
+.areaName {
+  margin-top: 16rpx;
+  margin-left: $padding-horizontal;
+  border: 1px solid #FD824A;
+  font-size: 28rpx;
+  display: inline-block;
+  padding: 10rpx 15rpx;
+  border-radius: 8rpx;
+  color: #FD824A;
+}
+
+.ContactPhone {
+  margin-top: 8px;
+  padding: 0 $padding-horizontal;
+
+  background: rgba(198, 203, 209, 0.08);
+  min-height: 56px;
+
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+.ContactIcon {
+  display: block;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+}
+.ContactLabel {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 21px;
+
+  color: #96A5B9;
+
+  margin-left: 8px;
+  margin-right: 16px;
+}
+.ContactPhoneNumber {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 21px;
+  color: #475C6F;
+}
+
+.module {
+  margin: $padding-horizontal;
+  .title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    .titleIcon {
+      width: 40rpx;
+      height: 40rpx;
+      margin-right: 14rpx;
+    }
+    .titleLabel {
+      font-size: 36rpx;
+      color: #4A81F2;
+    }
+  }
+  .value {
+    position: relative;
+    background: #FBFBFB;
+    padding: 27rpx 20rpx;
+    font-size: 36rpx;
+    color: #4B5B6D;
+    
+    .exp {
+      position: absolute;
+      top: 25rpx;
+      right: 20rpx;
+      padding: 10rpx 16rpx;
+      border-radius: 8px;
+      font-size: 28rpx;
+      background-color: #4A81F2;
+      color: #fff;
+    }
+  }
+  .hasExemple {
+    padding-right: 110rpx;
+  }
+}
+.ModalBody {
+  .ModalText {
+    color: #4B5B6D;
+    font-size: 36rpx;
+    text-align: left;
+    margin-bottom: 10rpx;
+  }
+}
+.more {
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

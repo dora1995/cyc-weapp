@@ -1,0 +1,60 @@
+.Wrapper {
+  margin-top: 20px;
+}
+
+.Count {
+  font-weight: 500;
+  font-size: 24rpx;
+  color: #96A5B9;
+}
+
+.SchoolList {
+  padding: 20px 0;
+}
+
+.SchoolItem {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+  min-height: 64px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 16px;
+
+  background: rgba(198, 203, 209, 0.08);
+  border-radius: 10px;
+
+  margin-bottom: 12px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:active {
+    background: rgba(198, 203, 209, 0.25);
+  }
+}
+
+.LeftIcon {
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+}
+
+.SchoolName {
+  margin-left: 16px;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 24px;
+  color: #475C6F;
+  
+}
+.distance {
+  font-size: 14px;
+  color: #96A5B9;
+}
+
+.Tips {
+  font-size: 30rpx;
+  color: #FD824A;
+}
