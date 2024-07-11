@@ -3,13 +3,13 @@
   // display: flex;
   // flex-direction: column;
   // height: 216px;
-  background: linear-gradient(90.14deg, #1567E2 0.09%, #1099E6 99.86%);
+  background: linear-gradient(90.14deg, #1567e2 0.09%, #1099e6 99.86%);
   position: relative;
   overflow: hidden;
   // padding-top: 160rpx;
 }
 .top {
-  flex: 1
+  flex: 1;
 }
 
 .MatrixPointImage {
@@ -63,15 +63,14 @@
     margin-bottom: 20rpx;
   }
   .tabText {
-    font-size: 36rpx;
-    color: #99A4B7;
+    font-size: 28rpx;
+    color: #9ca5b6;
   }
   .TabHighlight {
     font-weight: 500;
-    color: #4B5B6D;
+    color: #4e5b6b;
   }
 }
-
 
 .HighlightLine {
   position: absolute;
@@ -79,6 +78,6 @@
   left: 0;
   width: 100%;
   height: 6rpx;
-  background-color: #3483FA;
+  background-color: #3483fa;
   border-radius: 3px;
 }

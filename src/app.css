@@ -1,2 +1,9 @@
+@font-face {
+  font-family: "MyFont";
+  src: url("https://zy.rainchapter.com/school/static/AlibabaPuHuiTi-3-85-Bold.ttf")
+    format("truetype");
+}
+
 page {
+  /* font-family: "MyFont"; */
 }

@@ -1,104 +1,86 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { View } from '@remax/one'
-import { useAlert } from '../Modal'
-import geocoder from '@/api/geocoder'
-import s from './index.scss'
+import React, { useCallback, useEffect, useState } from "react";
+import { View } from "@remax/one";
+import { useAlert } from "../Modal";
+import geocoder from "@/api/geocoder";
+import s from "./index.scss";
 
 type LocationCtx = null | {
-  latitude: number
-  longitude: number
-  // address: string
-  province: string
-  city: string
-  district: string
-  street: string
-  street_number: string
-}
+  latitude: number;
+  longitude: number;
+  province: string;
+  city: string;
+  district: string;
+  street: string;
+  street_number: string;
+};
 
 export default (props: {
-  deny: () => JSX.Element
-  loaded: (locationCtx: LocationCtx) => JSX.Element
-  loading: () => JSX.Element
-  failure: (err: any) => JSX.Element
+  deny: () => JSX.Element;
+  loaded: (locationCtx: LocationCtx) => JSX.Element;
+  loading: () => JSX.Element;
+  failure: (err: any) => JSX.Element;
 }): [
-    JSX.Element,
-    {
-      locationCtx: LocationCtx
-      failure: null | Error
-      loaded: boolean
-      isLoading: boolean
-      isDeny: boolean
-    }
-  ] => {
-  const [locationCtx, setLocationCtx] = useState<LocationCtx>(null)
+  JSX.Element,
+  {
+    locationCtx: LocationCtx;
+    failure: null | Error;
+    loaded: boolean;
+    isLoading: boolean;
+    isDeny: boolean;
+  }
+] => {
+  const [locationCtx, setLocationCtx] = useState<LocationCtx>(null);
   const [locations, setLocations] = useState<null | {
-    latitude: number
-    longitude: number
-  }>(null)
-  // const [locations, setLocations] = useState<null | {
-  //   latitude: number
-  //   longitude: number
-  // }>({
-  //   latitude: 23.155142,
-  //   longitude: 113.526924,
-  // })
+    latitude: number;
+    longitude: number;
+  }>(null);
 
-  const [failure, setFailure] = useState<Error | null>(null)
-  const [loaded, setLoaded] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [isDeny, setIsDeny] = useState(false)
+  const [failure, setFailure] = useState<Error | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDeny, setIsDeny] = useState(false);
 
-  const [alertNode, alert] = useAlert()
+  const [alertNode, alert] = useAlert();
 
   const authSettingProcess = useCallback(
     (authSetting: WechatMiniprogram.AuthSetting) => {
-      setIsLoading(true)
-      if (!('scope.userLocation' in authSetting)) {
+      setIsLoading(true);
+      if (!("scope.userLocation" in authSetting)) {
         // 第一次提起授权
-      } else if (authSetting['scope.userLocation'] === false) {
+      } else if (authSetting["scope.userLocation"] === false) {
         // 明确拒绝授权了
-        setIsDeny(true)
-        setIsLoading(false)
-        return
+        setIsDeny(true);
+        setIsLoading(false);
+        return;
       }
       // 允许授权了
-      setIsDeny(false)
+      setIsDeny(false);
       wx.getLocation({
-        type: 'gcj02',
+        type: "gcj02",
         success(res) {
-          // wx.showModal({
-          //   title: '提示',
-          //   content: '获取成功' + res.latitude + ',' + res.longitude,
-          //   modalType: false,
-          // })
-          setLocations(res)
+          setLocations(res);
         },
         fail(err) {
-          // wx.showModal({
-          //   title: '提示',
-          //   content: '获取失败' + err,
-          //   modalType: false,
-          // })
           if (/deny|denied/.test(err.errMsg)) {
-            setIsDeny(true)
+            setIsDeny(true);
           } else {
-            setFailure(new Error(err.errMsg))
+            setFailure(new Error(err.errMsg));
           }
         },
         complete() {
-          setIsLoading(false)
+          setIsLoading(false);
         },
-      })
+      });
     },
     []
-  )
+  );
 
   useEffect(() => {
     if (!locations) {
-      return
+      return;
     }
-    setIsLoading(true)
-    geocoder({ type: 'location', ...locations })
+    setIsLoading(true);
+    geocoder({ type: "location", ...locations })
       .then(
         ({
           address_component: {
@@ -116,54 +98,54 @@ export default (props: {
             district,
             street,
             street_number,
-          })
-          setIsLoading(false)
+          });
+          setIsLoading(false);
         }
       )
       .catch((err) => {
-        setFailure(err)
-        setIsLoading(false)
-      })
-  }, [locations])
+        setFailure(err);
+        setIsLoading(false);
+      });
+  }, [locations]);
 
   useEffect(() => {
     if (loaded) {
-      return
+      return;
     }
 
     wx.getSetting({
       success({ authSetting }) {
-        authSettingProcess(authSetting)
+        authSettingProcess(authSetting);
       },
       complete() {
-        setLoaded(true)
+        setLoaded(true);
       },
-    })
-  }, [authSettingProcess, loaded])
+    });
+  }, [authSettingProcess, loaded]);
 
   const tapLocating = useCallback(() => {
-    setFailure(null)
+    setFailure(null);
     if (isDeny) {
       wx.openSetting({
         success({ authSetting }) {
-          if (authSetting['scope.userLocation'] === false) {
-            alert('请允许定位授权')
+          if (authSetting["scope.userLocation"] === false) {
+            alert("请允许定位授权");
           }
-          authSettingProcess(authSetting)
+          authSettingProcess(authSetting);
         },
-      })
+      });
     }
-  }, [isDeny, alert, authSettingProcess])
+  }, [isDeny, alert, authSettingProcess]);
 
-  let containerElement: React.ReactNode
+  let containerElement: React.ReactNode;
   if (isLoading) {
-    containerElement = props.loading()
+    containerElement = props.loading();
   } else if (failure) {
-    containerElement = props.failure(failure)
+    containerElement = props.failure(failure);
   } else if (isDeny) {
-    containerElement = props.deny()
+    containerElement = props.deny();
   } else {
-    containerElement = props.loaded(locationCtx)
+    containerElement = props.loaded(locationCtx);
   }
 
   const backElement = (
@@ -171,7 +153,7 @@ export default (props: {
       {containerElement}
       {alertNode}
     </View>
-  )
+  );
 
-  return [backElement, { locationCtx, failure, loaded, isLoading, isDeny }]
-}
+  return [backElement, { locationCtx, failure, loaded, isLoading, isDeny }];
+};
