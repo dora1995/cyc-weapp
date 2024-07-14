@@ -1,4 +1,4 @@
-import request from './'
+import request from "./";
 
 /**
  * 提交小程序授权登录的 code
@@ -10,17 +10,17 @@ import request from './'
 export function submitWeappLoginCode({
   code, // source_id,
 }: {
-  code: string
+  code: string;
   // source_id?: string
 }) {
   return request<{ token: string }>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/login',
+      method: "POST",
+      url: "/user/auth/weapp/login",
       data: { code },
     },
-    '授权登录'
-  )
+    "授权登录"
+  );
 }
 
 /**
@@ -35,22 +35,22 @@ export function submitBasicInfo({
   is_intent,
   phone,
 }: {
-  lng: string | undefined
-  lat: string | undefined
-  grade: number
-  location: string | undefined
-  living_area: string
-  is_intent: number
-  phone: string
+  lng: string | undefined;
+  lat: string | undefined;
+  grade: number;
+  location: string | undefined;
+  living_area: string;
+  is_intent: number;
+  phone: string;
 }) {
   return request<null>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/profile',
+      method: "POST",
+      url: "/user/auth/weapp/profile",
       data: { lng, lat, grade, location, living_area, is_intent, phone },
     },
-    '提交用户位置信息和年级'
-  )
+    "提交用户位置信息和年级"
+  );
 }
 
 /**
@@ -63,28 +63,28 @@ export function refreshUserProfile({
   iv,
   userInfo,
 }: {
-  encryptedData: string
-  iv: string
+  encryptedData: string;
+  iv: string;
   userInfo: {
-    avatarUrl: string
-    country: string
-    province: string
-    city: string
-    gender: 0 | 1 | 2 // 0未知  1男性  2女性
-    language: 'en' | 'zh_CN' | 'zh_TW'
-    nickName: string
-  }
+    avatarUrl: string;
+    country: string;
+    province: string;
+    city: string;
+    gender: 0 | 1 | 2; // 0未知  1男性  2女性
+    language: "en" | "zh_CN" | "zh_TW";
+    nickName: string;
+  };
 }) {
   return request<{
-    token: string
+    token: string;
   }>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/user/getUserProfile',
+      method: "POST",
+      url: "/user/auth/weapp/user/getUserProfile",
       data: { encryptedData, iv, userInfo },
     },
-    '更新用户资料'
-  )
+    "更新用户资料"
+  );
 }
 
 /**
@@ -96,19 +96,19 @@ export function refreshWeappUserInfo({
   encryptedData,
   iv,
 }: {
-  encryptedData: string
-  iv: string
+  encryptedData: string;
+  iv: string;
 }) {
   return request<{
-    token: string
+    token: string;
   }>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/userInfo',
+      method: "POST",
+      url: "/user/auth/weapp/userInfo",
       data: { encryptedData, iv },
     },
-    '提交用户资料'
-  )
+    "提交用户资料"
+  );
 }
 
 /**
@@ -120,19 +120,19 @@ export function submitPhone({
   encryptedData,
   iv,
 }: {
-  encryptedData: string
-  iv: string
+  encryptedData: string;
+  iv: string;
 }) {
   return request<{
-    token: string
+    token: string;
   }>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/phone',
+      method: "POST",
+      url: "/user/auth/weapp/phone",
       data: { encryptedData, iv },
     },
-    '提交手机信息'
-  )
+    "提交手机信息"
+  );
 }
 
 /**
@@ -142,33 +142,43 @@ export function submitPhone({
  */
 export function getBasicInfo() {
   return request<{
-    location: string
-    lng: string
-    lat: string
-    grade: string
+    location: string;
+    lng: string;
+    lat: string;
+    grade: string;
   }>(
     {
-      method: 'GET',
-      url: '/user/auth/weapp/user/center/info',
+      method: "GET",
+      url: "/user/auth/weapp/user/center/info",
       data: {},
     },
-    '获取用户基本信息'
-  )
+    "获取用户基本信息"
+  );
 }
 
 // 提交意向表单
 export function submitIntentProfile(data: any) {
   return request<{
-    location: string
-    lng: string
-    lat: string
-    grade: string
+    location: string;
+    lng: string;
+    lat: string;
+    grade: string;
   }>(
     {
-      method: 'POST',
-      url: '/user/auth/weapp/user/submitIntentProfile',
+      method: "POST",
+      url: "/user/auth/weapp/user/submitIntentProfile",
       data,
     },
-    '提交意向信息'
-  )
+    "提交意向信息"
+  );
+}
+export function submitIntentSurvey(data: any) {
+  return request(
+    {
+      method: "POST",
+      url: "/user/auth/weapp/user/submitIntentSurvey",
+      data,
+    },
+    "提交意向调查"
+  );
 }

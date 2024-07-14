@@ -17,7 +17,7 @@ type SearchSchoolOptsTypes =
 
 export type SearchSchoolOpts = SearchSchoolOptsTypes & {
   page: number;
-  pagesize: number;
+  page_size: number;
 };
 
 /**

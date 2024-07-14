@@ -1,47 +1,57 @@
-import React, { useMemo } from 'react'
-import { Image, View, Text } from '@remax/one'
+import React, { useMemo } from "react";
+import { Image, View, Text } from "@remax/one";
 
-import LeftIcon from './LeftIcon.svg'
+import LeftIcon from "./LeftIcon.svg";
 
-import s from './index.scss'
-import Empty from '../Empty'
-
+import s from "./index.scss";
+import Empty from "../Empty";
+import SchoolItem from "../SchoolItem";
+import Empty2 from "../Empty2";
 type Props = {
-  count: number
-  list: Array<{ id: number; school_name: string, distance?: string }>
-  onTapIndex(idx: number): void
-  currentTabIndex: number
-}
-export default ({ list, count, onTapIndex, currentTabIndex }: Props) => {
-  const listingElement = useMemo(() => {
-    if (count === 0) {
-      return <Empty />
-    }
+  count: number;
+  list: Array<{ id: number; school_name: string; distance?: string }>;
+  currentTabIndex: number;
+  showDetail: boolean;
+  hightLightText?: string;
+};
 
-    return (
-      <View className={s.SchoolList}>
-        {list.map((item, idx) => {
-          return (
-            <View
-              key={item.id}
-              className={s.SchoolItem}
-              onTap={() => onTapIndex(idx)}
-            >
-              <Image className={s.LeftIcon} src={LeftIcon} />
-              <View className={s.SchoolName}>{item.school_name}{ item.distance ? <Text className={s.distance}>{`(距离约${item.distance}公里)`}</Text> : null }</View>
-            </View>
-          )
-        })}
-      </View>
-    )
-  }, [count, list, onTapIndex])
-
+const map = {
+  1: "公办",
+  2: "民办",
+};
+export default ({
+  list,
+  count,
+  currentTabIndex,
+  showDetail = false,
+  hightLightText = "",
+}: Props) => {
   return (
     <View className={s.Wrapper}>
       <View className={s.Count}>
-        {count} 条搜索结果 { currentTabIndex == 0 ? `(当前定位统筹范围)` : ''} <Text className={s.Tips}>(信息仅供参考)</Text>
+        {count} 条搜索结果 {currentTabIndex == 0 ? `(当前定位统筹范围)` : ""}{" "}
+        <Text className={s.Tips}>(信息仅供参考)</Text>
       </View>
-      {listingElement}
+      {count == 0 ? (
+        currentTabIndex == 1 ? (
+          <Empty2 />
+        ) : (
+          <Empty />
+        )
+      ) : (
+        <View className={s.SchoolList}>
+          {list.map((item, idx) => {
+            return (
+              <SchoolItem
+                hightLightText={hightLightText}
+                showDetail={showDetail}
+                key={item.id}
+                item={item}
+              />
+            );
+          })}
+        </View>
+      )}
     </View>
-  )
-}
+  );
+};

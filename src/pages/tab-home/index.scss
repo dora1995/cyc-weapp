@@ -11,7 +11,7 @@
   width: 70px;
   text-align: right;
   margin-right: 10px;
-  color: #4B5B6D;
+  color: #4b5b6d;
 }
 .seatchSelect {
   flex: 1;
@@ -25,13 +25,13 @@
   width: 100%;
 }
 .btns {
-  background: #EEEFF1;
+  background: #eeeff1;
   padding: 30rpx 40rpx;
   display: flex;
   .btn {
     display: flex;
     font-size: 30rpx;
-    color: #4B5B6D;
+    color: #4b5b6d;
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -43,7 +43,7 @@
   }
   .shareBtn {
     flex: 1;
-    background: #EEEFF1;
+    background: #eeeff1;
     box-shadow: none;
     padding: 0;
     border: none;
@@ -56,25 +56,24 @@
 .newLocation {
   width: 100%;
   margin-top: 10rpx;
-  color: #4B5B6D;
+  color: #4b5b6d;
   font-size: 28rpx;
   text-align: left;
 }
-.ad{
+.ad {
   max-height: 540px;
   .SelectList {
     width: 250px;
     max-height: 375px;
     border-radius: 4px;
-    
   }
-  .closeBtn{
+  .closeBtn {
     margin-top: 20px;
     display: flex;
     height: 60px;
     align-items: center;
     justify-content: center;
-    .btn{
+    .btn {
       width: 100px;
       display: flex;
       height: 25px;
@@ -85,4 +84,34 @@
       border-radius: 4px;
     }
   }
+}
+
+.Title {
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 34px;
+  color: #475c6f;
+
+  padding-top: 80px;
+  padding-bottom: 60px;
+}
+.select {
+  margin-bottom: 8px;
+}
+.phone {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.input {
+  flex: 1;
+  height: 42px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid rgba(198, 203, 209, 0.3);
+  margin-right: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
 }

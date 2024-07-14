@@ -12,6 +12,16 @@
   padding: 20px 0;
 }
 
+.schooleBig {
+  padding: 10px 16px;
+  margin-bottom: 12px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  background: #fbfbfb;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
 .SchoolItem {
   display: flex;
   align-items: center;
@@ -19,20 +29,11 @@
   justify-content: flex-start;
   min-height: 64px;
   width: 100%;
-  box-sizing: border-box;
-  padding: 10px 16px;
-
-  background: rgba(198, 203, 209, 0.08);
-  border-radius: 10px;
-
-  margin-bottom: 12px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-
-  &:active {
-    background: rgba(198, 203, 209, 0.25);
-  }
+  // border-bottom: 1px dashed #e6e9ed;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+.fuckText {
 }
 
 .LeftIcon {
