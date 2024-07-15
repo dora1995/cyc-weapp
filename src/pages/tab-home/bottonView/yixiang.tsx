@@ -120,13 +120,13 @@ function duikou() {
       });
       return;
     }
-    if (!currrentAreaId) {
-      wx.showToast({
-        title: "请选择当前居住区",
-        icon: "none",
-      });
-      return;
-    }
+    // if (!currrentAreaId) {
+    //   wx.showToast({
+    //     title: "请选择当前居住区",
+    //     icon: "none",
+    //   });
+    //   return;
+    // }
     if (!huji) {
       wx.showToast({
         title: "请选择户籍地所在区",
@@ -170,7 +170,7 @@ function duikou() {
         ?.title,
       living_area: hujiList.find((item) => item.value == huji)?.title,
       phone: phone,
-      intent_area: areaList.find((item) => item.id == currrentAreaId)?.name,
+      intent_area: areaList.find((item) => item.id == yixiangAreaId)?.name,
       intent_school: schoolList.find((item) => item.id == yixiangSchoolId)
         ?.school_name,
       is_intent_lession: yixiang,
@@ -206,7 +206,7 @@ function duikou() {
           setCurrentGrade(Number(id));
         }}
       />
-      <Select
+      {/* <Select
         className={s.select}
         idKey="id"
         titleKey="name"
@@ -218,7 +218,7 @@ function duikou() {
           console.log(id);
           setCurrentAreaId(Number(id));
         }}
-      />
+      /> */}
       <Select
         className={s.select}
         idKey="value"
