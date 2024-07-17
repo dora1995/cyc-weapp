@@ -11,18 +11,23 @@ type Props = {
   item: any;
   showDetail: boolean;
   hightLightText: string;
+  showLook?: boolean;
 };
 
 const map = {
   1: "公办",
   2: "民办",
 };
-export default ({ item, showDetail = false, hightLightText = "" }: Props) => {
+export default ({
+  item,
+  showDetail = false,
+  hightLightText = "",
+  showLook = true,
+}: Props) => {
   const type = map[item.education_nature];
   const look_count = item.look_count;
 
   const school_enr_location = item.school_enr_location;
-  const [show, setShow] = useState(false);
 
   function onTapIndex() {
     wx.navigateTo({
@@ -73,7 +78,7 @@ export default ({ item, showDetail = false, hightLightText = "" }: Props) => {
                 style={{ marginRight: "8px" }}
               >{`距离约${item.distance}公里`}</Text>
             ) : null}
-            <Text>{look_count}人浏览</Text>
+            {showLook ? <Text>{look_count}人浏览</Text> : null}
           </View>
         </View>
       </View>

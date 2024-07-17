@@ -2,8 +2,8 @@ import { View, Image, Text, Input, Button } from "remax/one";
 import React, { useEffect, useRef, useState } from "react";
 import s from "../index.scss";
 import WxLoading from "@/components/Loading";
-import { useMemoizedFn } from "ahooks";
-import { searchSchool } from "@/api/school";
+import { useMemoizedFn, useUpdateEffect } from "ahooks";
+import { getGroupchat, searchSchool } from "@/api/school";
 import SearchInput from "../components/SearchInput";
 import ns from "./styles.scss";
 import Mselect from "@/components/Select";
@@ -12,6 +12,11 @@ import Select from "@/components/Select";
 import { getAreaList } from "@/api/area";
 import UpdatePhoneButton from "@/components/UpdatePhoneInfo/Button";
 import { submitIntentSurvey } from "@/api/auth";
+import {
+  getStorageInfoSync,
+  getStorageSync,
+  setStorageSync,
+} from "remax/wechat";
 interface ISchool {
   id: number;
   school_name: string;
@@ -41,15 +46,27 @@ function duikou() {
     });
   }
 
+  function getImg() {
+    getGroupchat().then((res) => {
+      if (res.grade) {
+        setGradeList(
+          res.grade.map((item) => {
+            return {
+              grade: item.grade,
+              title: item.grade_content,
+            };
+          })
+        );
+      }
+    });
+  }
+
   useEffect(() => {
     getAreaListFn();
+    getImg();
   }, []);
 
-  const [gradeList] = useState([
-    { grade: 1, title: "学期小班" },
-    { grade: 2, title: "学期中班" },
-    { grade: 3, title: "学期大班" },
-  ] as const);
+  const [gradeList, setGradeList] = useState([]);
 
   const liaojieList = [
     { value: 1, title: "意向了解" },
@@ -72,8 +89,7 @@ function duikou() {
   ];
 
   const [name, setName] = useState("");
-  const [currrentGrade, setCurrentGrade] = useState(0);
-  const [currrentAreaId, setCurrentAreaId] = useState(0);
+  const [currrentGrade, setCurrentGrade] = useState();
   const [huji, setHuji] = useState(0);
   const [phone, setPhone] = useState("");
   const [yixiangAreaId, setYixiangAreaId] = useState(0);
@@ -120,13 +136,6 @@ function duikou() {
       });
       return;
     }
-    // if (!currrentAreaId) {
-    //   wx.showToast({
-    //     title: "请选择当前居住区",
-    //     icon: "none",
-    //   });
-    //   return;
-    // }
     if (!huji) {
       wx.showToast({
         title: "请选择户籍地所在区",
@@ -162,7 +171,6 @@ function duikou() {
       });
       return;
     }
-
     submitIntentSurvey({
       name,
       grade: currrentGrade,
@@ -181,6 +189,45 @@ function duikou() {
     });
   }
 
+  useUpdateEffect(() => {
+    setStorageSync("intentProfile", {
+      name,
+      currrentGrade,
+      huji,
+      phone,
+      yixiangAreaId,
+      yixiangSchoolId,
+      yixiang,
+    });
+  }, [
+    name,
+    currrentGrade,
+    huji,
+    phone,
+    yixiangAreaId,
+    yixiangSchoolId,
+    yixiang,
+  ]);
+  console.log(6666);
+  useEffect(() => {
+    const sto = getStorageSync("intentProfile");
+    const {
+      name,
+      currrentGrade,
+      huji,
+      phone,
+      yixiangAreaId,
+      yixiangSchoolId,
+      yixiang,
+    } = sto;
+    setName(name);
+    setCurrentGrade(currrentGrade);
+    setHuji(huji);
+    setPhone(phone);
+    setYixiangAreaId(yixiangAreaId);
+    setYixiangSchoolId(yixiangSchoolId);
+    setYixiang(yixiang);
+  }, []);
   return (
     <View className={s.SearchArea}>
       <View style={{ marginBottom: "8px" }}>
@@ -199,26 +246,13 @@ function duikou() {
         idKey="grade"
         titleKey="title"
         currentId={currrentGrade}
-        list={[...gradeList]}
+        list={gradeList}
         placeholder="选择孩子年级"
         placeholderColor="#C6CBD1"
         onSelect={(id) => {
           setCurrentGrade(Number(id));
         }}
       />
-      {/* <Select
-        className={s.select}
-        idKey="id"
-        titleKey="name"
-        currentId={currrentAreaId}
-        placeholderColor="#C6CBD1"
-        list={areaList}
-        placeholder="请选择居住区"
-        onSelect={(id) => {
-          console.log(id);
-          setCurrentAreaId(Number(id));
-        }}
-      /> */}
       <Select
         className={s.select}
         idKey="value"

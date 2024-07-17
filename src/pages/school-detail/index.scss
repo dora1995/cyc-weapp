@@ -26,9 +26,9 @@ $MAP_HEIGHT: 400rpx;
   // transform: translate(20px, -50%);
   background-color: #fff;
   padding: 20rpx;
-  border: 1px solid #EEEFF1;
+  border: 1px solid #eeeff1;
   border-radius: 16rpx;
-  box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.16);
+  box-shadow: 0px 0px 20px 1px rgba(0, 0, 0, 0.16);
   &::before {
     content: "";
     position: absolute;
@@ -48,7 +48,7 @@ $MAP_HEIGHT: 400rpx;
   height: 30px;
   margin-left: 24rpx;
 }
-.bannerImg{
+.bannerImg {
   width: 100%;
   border-radius: 8px;
 }
@@ -63,21 +63,23 @@ $MAP_HEIGHT: 400rpx;
   white-space: nowrap;
   font-style: normal;
   font-weight: 500;
+  font-family: "MyFont";
 }
 .Navigate {
   margin-top: 8px;
-  background: #F1A159;
+  background: #f1a159;
   border-radius: 5px;
   color: white;
   line-height: 28px;
   min-width: 102px;
   font-weight: 500;
+  font-family: "MyFont";
   font-size: 14px;
   text-align: center;
 }
 
 .InfoAbove {
-  border-bottom: solid 1px #F2F2F2;
+  border-bottom: solid 1px #f2f2f2;
 }
 
 .SchoolName {
@@ -85,19 +87,20 @@ $MAP_HEIGHT: 400rpx;
   padding-top: 24px;
   font-style: normal;
   font-weight: 500;
+  font-family: "MyFont";
   font-size: 42rpx;
   line-height: 28px;
-  color: #4B5B6D;
+  color: #4b5b6d;
 }
 .areaName {
   margin-top: 16rpx;
   margin-left: $padding-horizontal;
-  border: 1px solid #FD824A;
+  border: 1px solid #fd824a;
   font-size: 28rpx;
   display: inline-block;
   padding: 10rpx 15rpx;
   border-radius: 8rpx;
-  color: #FD824A;
+  color: #fd824a;
 }
 
 .ContactPhone {
@@ -124,16 +127,17 @@ $MAP_HEIGHT: 400rpx;
   font-size: 15px;
   line-height: 21px;
 
-  color: #96A5B9;
+  color: #96a5b9;
 
   margin-left: 8px;
   margin-right: 16px;
 }
 .ContactPhoneNumber {
   font-weight: 500;
+  font-family: "MyFont";
   font-size: 15px;
   line-height: 21px;
-  color: #475C6F;
+  color: #475c6f;
 }
 
 .module {
@@ -149,16 +153,18 @@ $MAP_HEIGHT: 400rpx;
     }
     .titleLabel {
       font-size: 36rpx;
-      color: #4A81F2;
+      color: #4a81f2;
     }
   }
   .value {
     position: relative;
-    background: #FBFBFB;
+    background: #fbfbfb;
     padding: 27rpx 20rpx;
     font-size: 36rpx;
-    color: #4B5B6D;
-    
+    color: #4b5b6d;
+    word-break: break-all;
+    text-align: justify;
+
     .exp {
       position: absolute;
       top: 25rpx;
@@ -166,7 +172,7 @@ $MAP_HEIGHT: 400rpx;
       padding: 10rpx 16rpx;
       border-radius: 8px;
       font-size: 28rpx;
-      background-color: #4A81F2;
+      background-color: #4a81f2;
       color: #fff;
     }
   }
@@ -176,14 +182,14 @@ $MAP_HEIGHT: 400rpx;
 }
 .ModalBody {
   .ModalText {
-    color: #4B5B6D;
+    color: #4b5b6d;
     font-size: 36rpx;
     text-align: left;
     margin-bottom: 10rpx;
   }
 }
 .more {
-  overflow:hidden;
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }

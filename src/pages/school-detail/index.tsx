@@ -72,20 +72,10 @@ export default createPage((pageCtx) => {
     };
   });
 
-  const schoolLocationList = useMemo(() => {
-    if (detail?.school_enr_location) {
-      const { school_enr_location } = detail;
-      return school_enr_location.split(/,|，/g);
-    } else {
-      return [];
-    }
-  }, [detail]);
-
   if (!detail) {
     return <></>;
   }
   const Education = { 1: "公办小学", 2: "民办小学", 3: "" };
-
   const dataList = [
     { icon: Icon1, value: detail?.geo_position, label: "地址" },
     {
@@ -100,6 +90,7 @@ export default createPage((pageCtx) => {
       icon: Icon6,
       value: tranferStr(detail?.enr_telphone),
       label: "招生电话",
+      isRich: true,
     },
     {
       icon: Icon7,
@@ -204,6 +195,7 @@ export default createPage((pageCtx) => {
                           color: "#4B5B6D",
                           "max-height": "450rpx",
                           overflow: "auto",
+                          "text-align": "justify",
                         }}
                         content={item.value}
                       />

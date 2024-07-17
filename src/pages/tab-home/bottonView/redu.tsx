@@ -22,7 +22,8 @@ interface IArea {
 const pageDerive = (page: number, isRefresh: boolean) =>
   isRefresh ? 1 : page + 1;
 
-function duikou() {
+function duikou(props) {
+  const { name_status } = props;
   // 学校数据相关
   const [fetching, setFetching] = useState(false);
   const [currrentAreaId, setCurrentAreaId] = useState(0);
@@ -160,6 +161,7 @@ function duikou() {
         count={schoolCount}
         list={schoolList}
         currentTabIndex={0}
+        name_status={name_status}
       />
 
       {fetching && <WxLoading loading={true} />}

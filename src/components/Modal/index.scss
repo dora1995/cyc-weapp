@@ -9,12 +9,14 @@
 .TitleWrapper {
   font-size: 19px;
   font-weight: 500;
+  font-family: "MyFont";
   color: #333333;
 }
 
 .BodyWrapper {
   font-size: 16px;
   font-weight: 500;
+  font-family: "MyFont";
   color: #666;
 
   padding-top: 30px;
@@ -38,15 +40,15 @@
     &.Cancel {
       margin-right: 15px;
       box-sizing: border-box;
-      border: 1px solid #4A81F2;
+      border: 1px solid #4a81f2;
       line-height: 40px - 1px * 2;
-      color: #4A81F2;
+      color: #4a81f2;
     }
 
     &.Confirm {
       color: white;
       // background: linear-gradient(90.14deg,#1567e2 .09%,#1099e6 99.86%);
-      background: #4A81F2;
+      background: #4a81f2;
     }
   }
 }

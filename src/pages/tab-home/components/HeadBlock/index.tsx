@@ -18,15 +18,25 @@ import Yixiang from "../../bottonView/yixiang";
 import Jinqun from "../../bottonView/jinqun";
 import { useQuery } from "remax";
 
-const newTabs = [
-  { name: "定位查", id: 1, icon: Icon1, component: Dingwei },
-  { name: "对口查", id: 2, icon: Icon2, component: Duikou },
-  { name: "热度排行", id: 3, icon: Icon3, component: Redu },
-  { name: "意向调查", id: 4, icon: Icon4, component: Yixiang },
-  { name: "进群交流", id: 5, icon: Icon5, component: Jinqun },
-];
+export default (props) => {
+  const { name_status } = props;
 
-export default () => {
+  const newTabs = useMemo(
+    () => [
+      { name: "定位查", id: 1, icon: Icon1, component: Dingwei },
+      { name: "对口查", id: 2, icon: Icon2, component: Duikou },
+      {
+        name: name_status == 1 ? "分类搜索" : "热度排行",
+        id: 3,
+        icon: Icon3,
+        component: Redu,
+      },
+      { name: "意向调查", id: 4, icon: Icon4, component: Yixiang },
+      { name: "进群交流", id: 5, icon: Icon5, component: Jinqun },
+    ],
+    [name_status]
+  );
+
   const navBarHeight = getFillHeightExpression();
 
   const query = useQuery();
@@ -75,7 +85,7 @@ export default () => {
           })}
         </View>
       </View>
-      <Render />
+      <Render name_status={name_status} />
     </>
   );
 };

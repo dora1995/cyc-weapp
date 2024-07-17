@@ -13,7 +13,7 @@ export default createPage((pageCtx) => {
   // 搜索条件
   const [showLayout, setShowLayout] = useState(false);
   const [adSrc, setAdSrc] = useState("");
-
+  const [name_status, setname_status] = useState(1);
   function getImg() {
     getGroupchat()
       .then((res) => {
@@ -21,6 +21,7 @@ export default createPage((pageCtx) => {
           setAdSrc(res.advertise_pic);
           setShowLayout(true);
         }
+        setname_status(res.name_status);
       })
       .catch(pageCtx.setError);
   }
@@ -41,7 +42,7 @@ export default createPage((pageCtx) => {
         title="广州小学信息查一查"
         background="linear-gradient(90deg, #1469E1 0%, #1996E6 100%)"
       />
-      <HeadBlock />
+      <HeadBlock name_status={name_status} />
       {/* 用户需知 */}
       <WindowLayout zIndex={9999} show={showLayout}>
         <View className={s.ad}>

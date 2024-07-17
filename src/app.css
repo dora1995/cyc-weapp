@@ -3,7 +3,12 @@
   src: url("https://zy.rainchapter.com/school/static/AlibabaPuHuiTi-3-85-Bold.ttf")
     format("truetype");
 }
+@font-face {
+  font-family: "MyFont2";
+  src: url("https://zy.rainchapter.com/school/static/AlibabaPuHuiTi-3-55-Regular.ttf")
+    format("truetype");
+}
 
 page {
-  /* font-family: "MyFont"; */
+  font-family: "MyFont2";
 }

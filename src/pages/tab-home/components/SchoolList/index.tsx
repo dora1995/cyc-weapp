@@ -13,6 +13,7 @@ type Props = {
   currentTabIndex: number;
   showDetail: boolean;
   hightLightText?: string;
+  name_status?: number;
 };
 
 const map = {
@@ -25,6 +26,7 @@ export default ({
   currentTabIndex,
   showDetail = false,
   hightLightText = "",
+  name_status = 1,
 }: Props) => {
   return (
     <View className={s.Wrapper}>
@@ -43,6 +45,7 @@ export default ({
           {list.map((item, idx) => {
             return (
               <SchoolItem
+                showLook={name_status == 2}
                 hightLightText={hightLightText}
                 showDetail={showDetail}
                 key={item.id}

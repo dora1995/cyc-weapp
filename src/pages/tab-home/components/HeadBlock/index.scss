@@ -56,7 +56,8 @@
   flex: 1;
   position: relative;
   text-align: center;
-  font-weight: 400;
+  font-weight: 500;
+  font-family: "MyFont";
   .tabIcon {
     width: 90rpx;
     height: 90rpx;
@@ -68,6 +69,7 @@
   }
   .TabHighlight {
     font-weight: 500;
+    font-family: "MyFont";
     color: #4e5b6b;
   }
 }
