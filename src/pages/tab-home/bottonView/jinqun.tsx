@@ -102,7 +102,7 @@ function duikou() {
     getImg();
   }, []);
   return (
-    <View className={s.SearchArea}>
+    <View className={s.SearchArea} key="jinqun">
       <View className={s.intoQr}>
         <Image
           onTap={handleImgClick}

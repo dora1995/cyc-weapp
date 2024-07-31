@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { usePageEvent } from "@remax/macro";
 import { getGroupchat } from "@/api/school";
 import { Image, View } from "@remax/one";
@@ -22,8 +22,10 @@ import Icon10 from "@/imgs/icon_school_official@2x.png";
 import Icon11 from "@/imgs/icon_school_rules@2x.png";
 import MapIcon from "@/imgs/icon_map_location@2x.png";
 import ToMapIcon from "@/imgs/icon_map_navigate@2x.png";
+import zhuanIcon from "./zhuan.png";
 import MpHtml from "mp-html/dist/mp-weixin/index";
 import { tranferStr } from "@/utils/tranferStr";
+import { Button } from "remax/one";
 
 export default createPage((pageCtx) => {
   const [detail, setDetail] = useState<null | SchoolDetail>(null);
@@ -72,9 +74,10 @@ export default createPage((pageCtx) => {
     };
   });
 
-  if (!detail) {
-    return <></>;
-  }
+  const [move, setMove] = useState(false);
+  const [top, setTop] = useState(400);
+  const [right, setRight] = useState(10);
+
   const Education = { 1: "公办小学", 2: "民办小学", 3: "" };
   const dataList = [
     { icon: Icon1, value: detail?.geo_position, label: "地址" },
@@ -140,8 +143,46 @@ export default createPage((pageCtx) => {
     wx.navigateTo({ url: "/pages/intentProfile/index" });
   }
 
+  // function handleTouchstart(e) {
+  //   console.log(e);
+  //   e.stopPropagation();
+  //   setMove(true);
+  //   return false;
+  // }
+  // function handleTouchMove(e) {
+  //   console.log(e);
+  //   e.stopPropagation();
+  //   // 在滚动时，禁止页面滚动
+
+  //   if (move) {
+  //     const changedTouches = e.changedTouches[0];
+  //     const { clientY } = changedTouches;
+  //     setTop(clientY);
+  //   }
+  //   return false;
+  // }
+  // function handleTouchend(e) {
+  //   setMove(false);
+  //   e.stopPropagation();
+  //   return false;
+  // }
+  function handleShow(e) {
+    e.stopPropagation();
+    if (right === -26) {
+      setRight(10);
+      setTimeout(() => {
+        setRight(-26);
+      }, 3000);
+    }
+    return false;
+  }
+
+  if (!detail) {
+    return <></>;
+  }
+
   return (
-    <>
+    <View style={{ height: "100vh", overflow: move ? "hidden" : "auto" }}>
       <NavBar
         background="linear-gradient(90deg, #1469E1 0%, #1996E6 100%)"
         title="学校详情"
@@ -233,6 +274,38 @@ export default createPage((pageCtx) => {
           </View>
         </>
       ) : null}
-    </>
+      <View
+        // onTouchStart={handleTouchstart}
+        // onTouchMove={handleTouchMove}
+        // onTouchEnd={handleTouchend}
+        style={{
+          position: "fixed",
+          right: right + "px",
+          top: top + "px",
+          borderRadius: "50%",
+          width: "52px",
+          height: "52px",
+          overflow: "hidden",
+        }}
+      >
+        <Button
+          openType="share"
+          style={{
+            background: "none",
+            width: "52px",
+            height: "52px",
+            padding: 0,
+            borderRadius: "50%",
+            overflow: "hidden",
+            boxSizing: "content-box",
+          }}
+        >
+          <Image
+            src={zhuanIcon}
+            style={{ width: "52px", height: "52px" }}
+          ></Image>
+        </Button>
+      </View>
+    </View>
   );
 });

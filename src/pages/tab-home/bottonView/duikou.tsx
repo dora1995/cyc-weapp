@@ -2,12 +2,7 @@ import { View, Image } from "remax/one";
 import React, { useEffect, useRef, useState } from "react";
 import s from "../index.scss";
 import WxLoading from "@/components/Loading";
-import {
-  useDebounceEffect,
-  useDebounceFn,
-  useMemoizedFn,
-  useUpdateEffect,
-} from "ahooks";
+import { useMemoizedFn, useUpdateEffect } from "ahooks";
 import { searchSchool } from "@/api/school";
 import SearchInput from "../components/SearchInput2";
 import Icon1 from "@/imgs/duikou1.png";
@@ -24,14 +19,16 @@ interface ISchool {
 const pageDerive = (page: number, isRefresh: boolean) =>
   isRefresh ? 1 : page + 1;
 
-function duikou() {
+function duikou(props) {
+  const { name_status } = props;
   // 学校数据相关
   const [fetching, setFetching] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [schoolCount, setSchoolCount] = useState(0);
   const [page, setPage] = useState(1);
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
-  const [unload, setUnload] = useState(true);
+  const [beginSearch, setBeginSearch] = useState(false);
+
   const [locateNode, { locationCtx }] = createLocation();
   const getLocationRef = useRef({
     latitude: locationCtx?.latitude,
@@ -50,7 +47,9 @@ function duikou() {
       page: pageParam,
       page_size: 20,
       school_enr_location: str,
-      location: `${getLocationRef.current?.latitude},${getLocationRef.current?.longitude}`,
+      location: getLocationRef.current.latitude
+        ? `${getLocationRef.current?.latitude},${getLocationRef.current?.longitude}`
+        : undefined,
     };
     setFetching(true);
     searchSchool(params)
@@ -79,7 +78,7 @@ function duikou() {
     if (count <= page * 20) {
       hasLoadAll.current = true;
     }
-    setUnload(false);
+    setBeginSearch(true);
     setFetching(false);
   };
 
@@ -106,40 +105,50 @@ function duikou() {
     }
   }, [locationCtx]);
 
-  useUpdateEffect(() => {
-    if (searchText === "") {
+  // useDebounceEffect(
+  //   () => {
+  //     if (searchText) {
+  //       hasLoadAll.current = false;
+  //       getList(true, searchText);
+  //     } else {
+  //       setSchoolList([]);
+  //       setSchoolCount(0);
+  //       hasLoadAll.current = false;
+  //     }
+  //   },
+  //   [searchText],
+  //   {
+  //     wait: 1500,
+  //   }
+  // );
+  function handleBlur() {
+    if (searchText) {
+      hasLoadAll.current = false;
+      getList(true, searchText);
+    } else {
+      setBeginSearch(false);
       setSchoolList([]);
-      setPage(1);
+      setSchoolCount(0);
     }
-  }, [searchText]);
-
-  useDebounceEffect(
-    () => {
-      if (searchText) {
-        hasLoadAll.current = false;
-        getList(true, searchText);
-      }
-    },
-    [searchText],
-    {
-      wait: 1000,
-    }
-  );
+  }
 
   return (
-    <View className={s.SearchArea}>
+    <View className={s.SearchArea} key="duikou">
       <SearchInput
         placeholder="请输入社区/路/街/巷/村/小区/大院/楼/栋/梯"
         value={searchText}
         onInput={(text) => {
           setSearchText(text);
+          // if (!text) {
+          //   setBeginSearch(false);
+          //   setSchoolList([]);
+          //   setSchoolCount(0);
+          // }
         }}
-        onConfirm={(e) => {
-          hasLoadAll.current = false;
-          getList(true, searchText);
-        }}
+        onBlur={handleBlur}
+        onConfirm={() => {}}
       />
-      {!searchText ? (
+      {!beginSearch ? (
         <>
           <View className={ns.module} style={{ marginTop: "20px" }}>
             <View className={ns.line}>
@@ -176,6 +185,7 @@ function duikou() {
           list={schoolList}
           currentTabIndex={1}
           hightLightText={searchText}
+          name_status={name_status}
         />
       )}
 

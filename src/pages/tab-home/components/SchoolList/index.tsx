@@ -45,10 +45,10 @@ export default ({
           {list.map((item, idx) => {
             return (
               <SchoolItem
+                key={item.id}
                 showLook={name_status == 2}
                 hightLightText={hightLightText}
                 showDetail={showDetail}
-                key={item.id}
                 item={item}
               />
             );

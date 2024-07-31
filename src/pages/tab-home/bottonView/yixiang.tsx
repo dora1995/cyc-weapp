@@ -1,22 +1,15 @@
 import { View, Image, Text, Input, Button } from "remax/one";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import s from "../index.scss";
 import WxLoading from "@/components/Loading";
 import { useMemoizedFn, useUpdateEffect } from "ahooks";
 import { getGroupchat, searchSchool } from "@/api/school";
 import SearchInput from "../components/SearchInput";
-import ns from "./styles.scss";
-import Mselect from "@/components/Select";
-import createLocation from "../components/Location";
 import Select from "@/components/Select";
 import { getAreaList } from "@/api/area";
 import UpdatePhoneButton from "@/components/UpdatePhoneInfo/Button";
-import { submitIntentSurvey } from "@/api/auth";
-import {
-  getStorageInfoSync,
-  getStorageSync,
-  setStorageSync,
-} from "remax/wechat";
+import { getBasicInfo, submitIntentSurvey } from "@/api/auth";
+import { getStorageSync, setStorageSync } from "remax/wechat";
 interface ISchool {
   id: number;
   school_name: string;
@@ -25,6 +18,26 @@ interface IArea {
   id: number;
   name: string;
 }
+
+const liaojieList = [
+  { value: 1, title: "意向了解" },
+  { value: 2, title: "暂不了解" },
+];
+
+const hujiList = [
+  { value: 1, title: "越秀区户籍" },
+  { value: 2, title: "海珠区户籍" },
+  { value: 3, title: "荔湾区户籍" },
+  { value: 4, title: "天河区户籍" },
+  { value: 5, title: "白云区户籍" },
+  { value: 6, title: "黄埔区户籍" },
+  { value: 7, title: "番禺区户籍" },
+  { value: 8, title: "花都区户籍" },
+  { value: 9, title: "南沙区户籍" },
+  { value: 10, title: "增城区户籍" },
+  { value: 11, title: "从化区户籍" },
+  { value: 12, title: "非广州市户籍" },
+];
 
 function duikou() {
   // 学校数据相关
@@ -67,27 +80,6 @@ function duikou() {
   }, []);
 
   const [gradeList, setGradeList] = useState([]);
-
-  const liaojieList = [
-    { value: 1, title: "意向了解" },
-    { value: 2, title: "暂不了解" },
-  ];
-
-  const hujiList = [
-    { value: 1, title: "越秀区户籍" },
-    { value: 2, title: "海珠区户籍" },
-    { value: 3, title: "荔湾区户籍" },
-    { value: 4, title: "天河区户籍" },
-    { value: 5, title: "白云区户籍" },
-    { value: 6, title: "黄埔区户籍" },
-    { value: 7, title: "番禺区户籍" },
-    { value: 8, title: "花都区户籍" },
-    { value: 9, title: "南沙区户籍" },
-    { value: 10, title: "增城区户籍" },
-    { value: 11, title: "从化区户籍" },
-    { value: 12, title: "非广州市户籍" },
-  ];
-
   const [name, setName] = useState("");
   const [currrentGrade, setCurrentGrade] = useState();
   const [huji, setHuji] = useState(0);
@@ -95,7 +87,7 @@ function duikou() {
   const [yixiangAreaId, setYixiangAreaId] = useState(0);
   const [yixiangSchoolId, setYixiangSchoolId] = useState(0);
   const [yixiang, setYixiang] = useState(0);
-
+  const [status, setStatus] = useState(false);
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
 
   function getSchoolList(id: number) {
@@ -186,6 +178,7 @@ function duikou() {
       wx.showToast({
         title: "提交成功",
       });
+      setStatus(true);
     });
   }
 
@@ -208,7 +201,7 @@ function duikou() {
     yixiangSchoolId,
     yixiang,
   ]);
-  console.log(6666);
+
   useEffect(() => {
     const sto = getStorageSync("intentProfile");
     const {
@@ -228,8 +221,44 @@ function duikou() {
     setYixiangSchoolId(yixiangSchoolId);
     setYixiang(yixiang);
   }, []);
+
+  const handleGradeSelect = useCallback((id) => {
+    setCurrentGrade(Number(id));
+  }, []);
+  const handleHujiSelect = useCallback((id) => {
+    setHuji(Number(id));
+  }, []);
+  const handleYixiangAreaSelect = useCallback((id) => {
+    setYixiangAreaId(Number(id));
+  }, []);
+  const handleYixiangSchoolSelect = useCallback((id) => {
+    setYixiangSchoolId(Number(id));
+  }, []);
+  const handleYixiangSelect = useCallback((id) => {
+    setYixiang(Number(id));
+  }, []);
+
+  useEffect(() => {
+    getBasicInfo().then((res: any) => {
+      console.log(res);
+      const intent_survey_status = res.intent_survey_status || false;
+      setStatus(intent_survey_status);
+    });
+  }, []);
+
+  const handleFuckClick = useCallback(() => {
+    if (!yixiangAreaId) {
+      wx.showToast({
+        title: "请先选择学校所在区",
+        icon: "none",
+      });
+      return false;
+    }
+    return true;
+  }, [yixiangAreaId]);
+
   return (
-    <View className={s.SearchArea}>
+    <View className={s.SearchArea} key="yixiang">
       <View style={{ marginBottom: "8px" }}>
         <SearchInput
           placeholder="请输入孩子姓名"
@@ -242,6 +271,7 @@ function duikou() {
         />
       </View>
       <Select
+        key="s1"
         className={s.select}
         idKey="grade"
         titleKey="title"
@@ -249,11 +279,10 @@ function duikou() {
         list={gradeList}
         placeholder="选择孩子年级"
         placeholderColor="#C6CBD1"
-        onSelect={(id) => {
-          setCurrentGrade(Number(id));
-        }}
+        onSelect={handleGradeSelect}
       />
       <Select
+        key="s2"
         className={s.select}
         idKey="value"
         titleKey="title"
@@ -261,10 +290,7 @@ function duikou() {
         placeholderColor="#C6CBD1"
         list={hujiList}
         placeholder="请选择户籍所在区"
-        onSelect={(id) => {
-          console.log(id);
-          setHuji(Number(id));
-        }}
+        onSelect={handleHujiSelect}
       />
       <View className={s.phone}>
         <View className={s.input}>
@@ -297,8 +323,8 @@ function duikou() {
           </UpdatePhoneButton>
         </View>
       </View>
-
       <Select
+        key="s3"
         className={s.select}
         idKey="id"
         titleKey="name"
@@ -306,12 +332,10 @@ function duikou() {
         placeholderColor="#C6CBD1"
         list={areaList}
         placeholder="请选择意向学校所在区"
-        onSelect={(id) => {
-          console.log(id);
-          setYixiangAreaId(Number(id));
-        }}
+        onSelect={handleYixiangAreaSelect}
       />
       <Select
+        key="s4"
         className={s.select}
         idKey="id"
         titleKey="school_name"
@@ -319,12 +343,11 @@ function duikou() {
         placeholderColor="#C6CBD1"
         list={schoolList}
         placeholder="请选择意向的民办学校"
-        onSelect={(id) => {
-          console.log(id);
-          setYixiangSchoolId(Number(id));
-        }}
+        onClick={handleFuckClick}
+        onSelect={handleYixiangSchoolSelect}
       />
       <Select
+        key="s5"
         className={s.select}
         idKey="value"
         titleKey="title"
@@ -332,10 +355,7 @@ function duikou() {
         placeholderColor="#C6CBD1"
         list={liaojieList}
         placeholder="是否了解新一衔接课程"
-        onSelect={(id) => {
-          console.log(id);
-          setYixiang(Number(id));
-        }}
+        onSelect={handleYixiangSelect}
       />
       <Button
         style={{
@@ -345,7 +365,7 @@ function duikou() {
         }}
         onTap={handleSubmit}
       >
-        确认信息
+        {!status ? "提交意向" : "再次提交意向"}
       </Button>
       {fetching && <WxLoading loading={true} />}
     </View>

@@ -47,12 +47,16 @@ export default ({
     const _text = str.split(find);
     return _text.map((item, index) => {
       return (
-        <>
+        <Text key={index}>
           <Text>{item}</Text>
           {index !== _text.length - 1 ? (
-            <Text style={{ color: "#ED8957" }}>{find}</Text>
+            <Text
+              style={{ color: "red", fontWeight: "bold", fontFamily: "MyFont" }}
+            >
+              {find}
+            </Text>
           ) : null}
-        </>
+        </Text>
       );
     });
   }

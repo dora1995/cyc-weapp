@@ -26,14 +26,14 @@ function duikou(props) {
   const { name_status } = props;
   // 学校数据相关
   const [fetching, setFetching] = useState(false);
-  const [currrentAreaId, setCurrentAreaId] = useState(0);
+  const [currrentAreaId, setCurrentAreaId] = useState();
   const [searchText, setSearchText] = useState("");
   const [schoolCount, setSchoolCount] = useState(0);
   const [areaList, setAreaList] = useState<IArea[]>([]);
   const [page, setPage] = useState(1);
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
   const [unload, setUnload] = useState(true);
-  const [currentNature, setCurrentNature] = useState(0);
+  const [currentNature, setCurrentNature] = useState();
 
   const hasLoadAll = useRef(false);
   const getList = useMemoizedFn(
@@ -84,10 +84,6 @@ function duikou(props) {
     setFetching(false);
   };
 
-  const handleSearch = () => {
-    getList(true);
-  };
-
   function getAreaListFn() {
     getAreaList().then((list) => {
       // 这里需要确认拿的是广州数据，也就是广州市在第一个
@@ -110,18 +106,22 @@ function duikou(props) {
   }, []);
 
   return (
-    <View className={s.SearchArea}>
+    <View className={s.SearchArea} key="redu">
       <View className={s.searchRow}>
         <Select
           className={s.seatchSelect}
           idKey="id"
           titleKey="name"
           currentId={currrentAreaId}
-          list={[{ id: 0, name: "全部区域" }, ...areaList]}
-          placeholder="全部"
+          list={[{ id: 0, name: "不限" }, ...areaList]}
+          placeholder="所在区"
           onSelect={(id) => {
             hasLoadAll.current = false;
-            setCurrentAreaId(Number(id));
+            if (id != 0) {
+              setCurrentAreaId(Number(id));
+            } else {
+              setCurrentAreaId(undefined);
+            }
             getList(true, searchText, Number(id), currentNature);
           }}
         />
@@ -133,14 +133,18 @@ function duikou(props) {
           titleKey="name"
           currentId={currentNature}
           list={[
-            { id: 0, name: "全部办学性质" },
+            { id: 0, name: "不限" },
             { id: 1, name: "公办小学" },
             { id: 2, name: "民办小学" },
           ]}
-          placeholder="请选择"
+          placeholder="办学性质"
           onSelect={(id) => {
             hasLoadAll.current = false;
-            setCurrentNature(Number(id));
+            if (id != 0) {
+              setCurrentNature(Number(id));
+            } else {
+              setCurrentNature(undefined);
+            }
             getList(true, searchText, currrentAreaId, Number(id));
           }}
         />
@@ -160,7 +164,7 @@ function duikou(props) {
         showDetail={false}
         count={schoolCount}
         list={schoolList}
-        currentTabIndex={0}
+        currentTabIndex={3}
         name_status={name_status}
       />
 

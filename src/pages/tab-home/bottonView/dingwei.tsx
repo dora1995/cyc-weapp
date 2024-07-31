@@ -14,7 +14,8 @@ interface ISchool {
   school_name: string;
 }
 
-function duikou() {
+function duikou(props) {
+  const { name_status } = props;
   // 学校数据相关
   const [fetching, setFetching] = useState(false);
   const [schoolCount, setSchoolCount] = useState(0);
@@ -135,7 +136,7 @@ function duikou() {
   }, [locationCtx]);
 
   return (
-    <View className={s.SearchArea}>
+    <View className={s.SearchArea} key="dingwei">
       <Button onTap={getLocationClick}>选择定位</Button>
       <div className={s.newLocation}>当前定位：{currentLocation}</div>
       <SchoolList
@@ -143,6 +144,7 @@ function duikou() {
         count={schoolCount}
         list={schoolList}
         currentTabIndex={0}
+        name_status={name_status}
       />
       {fetching && <WxLoading loading={true} />}
     </View>

@@ -34,6 +34,7 @@ export function submitBasicInfo({
   living_area,
   is_intent,
   phone,
+  grade_content,
 }: {
   lng: string | undefined;
   lat: string | undefined;
@@ -42,12 +43,22 @@ export function submitBasicInfo({
   living_area: string;
   is_intent: number;
   phone: string;
+  grade_content: string;
 }) {
   return request<null>(
     {
       method: "POST",
       url: "/user/auth/weapp/profile",
-      data: { lng, lat, grade, location, living_area, is_intent, phone },
+      data: {
+        lng,
+        lat,
+        grade,
+        location,
+        living_area,
+        is_intent,
+        phone,
+        grade_content,
+      },
     },
     "提交用户位置信息和年级"
   );

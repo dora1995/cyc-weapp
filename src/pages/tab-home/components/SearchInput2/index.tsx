@@ -10,6 +10,8 @@ export type Props = {
   onInput(val: string): void;
   onConfirm(type: "KEYBOARD" | "TAP"): void;
   showIcon?: boolean;
+  focus?: boolean;
+  onBlur?: () => void;
 };
 export default ({
   placeholder,
@@ -17,16 +19,20 @@ export default ({
   onInput,
   onConfirm,
   showIcon = true,
+  focus = false,
+  onBlur,
 }: Props) => {
   return (
     <View className={s.Wrapper}>
       <Input
+        focus={focus}
         className={s.Input}
         placeholder={placeholder}
         value={value}
         onInput={(e) => {
           onInput(e.target.value);
         }}
+        onBlur={onBlur}
         onConfirm={() => onConfirm("KEYBOARD")}
       />
 
