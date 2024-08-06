@@ -8,7 +8,12 @@
   src: url("https://zy.rainchapter.com/school/static/AlibabaPuHuiTi-3-55-Regular.ttf")
     format("truetype");
 }
-
+body {
+  font-family: "MyFont2";
+}
 page {
+  font-family: "MyFont2";
+}
+text {
   font-family: "MyFont2";
 }

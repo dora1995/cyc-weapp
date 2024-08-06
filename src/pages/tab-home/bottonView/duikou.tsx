@@ -11,6 +11,7 @@ import Icon3 from "@/imgs/duikou3.png";
 import ns from "./styles.scss";
 import createLocation from "../components/Location";
 import SchoolList from "../components/SchoolList";
+import { usePageEvent } from "remax/macro";
 interface ISchool {
   id: number;
   school_name: string;
@@ -131,6 +132,12 @@ function duikou(props) {
       setSchoolCount(0);
     }
   }
+  usePageEvent("onReachBottom", () => {
+    if (fetching) {
+      return;
+    }
+    getList(false, searchText);
+  });
 
   return (
     <View className={s.SearchArea} key="duikou">

@@ -92,6 +92,7 @@ export default ({
             color: "#9BA4B5",
             fontSize: "12px",
             display: open ? "block" : "flex",
+            textAlign: "justify",
           }}
         >
           {open ? (

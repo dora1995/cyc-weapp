@@ -10,6 +10,7 @@ import createLocation from "../components/Location";
 import Select from "@/components/Select";
 import { getAreaList } from "@/api/area";
 import SchoolList from "../components/SchoolList";
+import { usePageEvent } from "remax/macro";
 interface ISchool {
   id: number;
   school_name: string;
@@ -99,6 +100,13 @@ function duikou(props) {
       }
     });
   }
+
+  usePageEvent("onReachBottom", () => {
+    if (fetching) {
+      return;
+    }
+    getList(false, searchText, currrentAreaId, currentNature);
+  });
 
   useEffect(() => {
     getAreaListFn();

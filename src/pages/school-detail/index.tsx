@@ -80,15 +80,20 @@ export default createPage((pageCtx) => {
 
   const Education = { 1: "公办小学", 2: "民办小学", 3: "" };
   const dataList = [
-    { icon: Icon1, value: detail?.geo_position, label: "地址" },
+    // { icon: Icon1, value: detail?.geo_position, label: "地址" },
     {
       icon: Icon2,
       value: Education[detail?.education_nature || 3],
       label: "办学性质",
     },
     { icon: Icon3, value: detail?.spec_type, label: "特殊类型" },
-    { icon: Icon4, value: detail?.tuition, label: "学费" },
-    { icon: Icon5, value: detail?.stay, label: "住宿" },
+    {
+      icon: Icon4,
+      value: tranferStr(detail?.tuition),
+      label: "学费标准",
+      isRich: true,
+    },
+    { icon: Icon5, value: detail?.stay, label: "住宿条件" },
     {
       icon: Icon6,
       value: tranferStr(detail?.enr_telphone),
@@ -98,18 +103,19 @@ export default createPage((pageCtx) => {
     {
       icon: Icon7,
       value: detail?.enrollment_plan,
-      label: "招生计划(班/人)(2023)",
+      label: "招生计划",
+      isRich: true,
     },
     {
       icon: Icon8,
       value: tranferStr(detail?.school_enr_location),
-      label: "招生地段(2023)",
+      label: "招生地段",
       isRich: true,
     },
     {
       icon: Icon9,
       value: tranferStr(detail?.middle_shcool_dk),
-      label: "对口中学(2023)",
+      label: "对口中学",
       isRich: true,
     },
     {
@@ -122,7 +128,7 @@ export default createPage((pageCtx) => {
     {
       icon: Icon11,
       value: detail?.enrollment_rules,
-      label: "招生简章(2023)",
+      label: "招生简章",
       canCopy: true,
       hasExemple: "en",
     },
