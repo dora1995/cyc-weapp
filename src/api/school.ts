@@ -91,3 +91,13 @@ export function getGroupchat() {
     "获取学校详情"
   );
 }
+
+export function getEnrLocation(id: string) {
+  return request<string>(
+    {
+      method: "GET",
+      url: `/user/school_search/getEnrLocation/${id}`,
+    },
+    "获取学校详情"
+  );
+}

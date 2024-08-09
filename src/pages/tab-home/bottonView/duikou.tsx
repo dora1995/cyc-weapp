@@ -12,6 +12,8 @@ import ns from "./styles.scss";
 import createLocation from "../components/Location";
 import SchoolList from "../components/SchoolList";
 import { usePageEvent } from "remax/macro";
+import Select from "@/components/Select";
+import { getAreaList } from "@/api/area";
 interface ISchool {
   id: number;
   school_name: string;
@@ -29,6 +31,8 @@ function duikou(props) {
   const [page, setPage] = useState(1);
   const [schoolList, setSchoolList] = useState<ISchool[]>([]);
   const [beginSearch, setBeginSearch] = useState(false);
+  const fuckList = useRef<any[]>([]);
+  const [yixiangAreaId, setYixiangAreaId] = useState();
 
   const [locateNode, { locationCtx }] = createLocation();
   const getLocationRef = useRef({
@@ -38,47 +42,53 @@ function duikou(props) {
   });
 
   const hasLoadAll = useRef(false);
-  const getList = useMemoizedFn(async (isRefresh: boolean = true, str = "") => {
-    if (hasLoadAll.current) {
-      return;
+  const [hightLightText, setHightLightText] = useState([]);
+  const getList = useMemoizedFn(
+    async (isRefresh: boolean = true, str = "", areaId) => {
+      if (hasLoadAll.current) {
+        return;
+      }
+      if (str == "") {
+        return;
+      }
+      const pageParam = pageDerive(page, isRefresh);
+      let params = {
+        search_type: 2,
+        page: pageParam,
+        school_enr_location: str,
+        area_code: areaId == 0 ? undefined : areaId,
+        location: getLocationRef.current.latitude
+          ? `${getLocationRef.current?.latitude},${getLocationRef.current?.longitude}`
+          : undefined,
+      };
+      console.log(params);
+      setFetching(true);
+      searchSchool(params)
+        .then((list) => {
+          onSeachFetchDone(list, pageParam);
+        })
+        .catch((err) => {
+          setFetching(false);
+        });
     }
-    const pageParam = pageDerive(page, isRefresh);
-    let params = {
-      search_type: 2,
-      page: pageParam,
-      page_size: 20,
-      school_enr_location: str,
-      location: getLocationRef.current.latitude
-        ? `${getLocationRef.current?.latitude},${getLocationRef.current?.longitude}`
-        : undefined,
-    };
-    setFetching(true);
-    searchSchool(params)
-      .then((list) => {
-        onSeachFetchDone(list, pageParam);
-      })
-      .catch((err) => {
-        setFetching(false);
-      });
-  });
+  );
 
-  const onSeachFetchDone = (
-    {
-      count = 0,
-      rows: newList = [],
-    }: { count: number; rows: typeof schoolList },
-    page: number
-  ) => {
-    setSchoolCount(count);
+  const onSeachFetchDone = (i: any, page: number) => {
+    const { schoolList = [], str } = i;
+    setHightLightText(str);
+    setSchoolCount(schoolList.length);
     setPage(page);
-    if (page === 1) {
-      setSchoolList(newList);
-    } else {
-      setSchoolList([...schoolList, ...newList]);
-    }
-    if (count <= page * 20) {
-      hasLoadAll.current = true;
-    }
+
+    const _fuck = schoolList.map((item) => {
+      return {
+        ...item,
+        truncated_location: "",
+      };
+    });
+    const _fuck2 = schoolList.map((item) => item.truncated_location);
+    fuckList.current = _fuck2;
+    setSchoolList(_fuck);
+    hasLoadAll.current = true;
     setBeginSearch(true);
     setFetching(false);
   };
@@ -106,51 +116,64 @@ function duikou(props) {
     }
   }, [locationCtx]);
 
-  // useDebounceEffect(
-  //   () => {
-  //     if (searchText) {
-  //       hasLoadAll.current = false;
-  //       getList(true, searchText);
-  //     } else {
-  //       setSchoolList([]);
-  //       setSchoolCount(0);
-  //       hasLoadAll.current = false;
-  //     }
-  //   },
-  //   [searchText],
-  //   {
-  //     wait: 1500,
-  //   }
-  // );
   function handleBlur() {
     if (searchText) {
       hasLoadAll.current = false;
-      getList(true, searchText);
+      getList(true, searchText, yixiangAreaId);
     } else {
       setBeginSearch(false);
       setSchoolList([]);
       setSchoolCount(0);
     }
   }
-  usePageEvent("onReachBottom", () => {
-    if (fetching) {
-      return;
-    }
-    getList(false, searchText);
-  });
+
+  const [areaList, setAreaList] = useState<any>([]);
+  function getAreaListFn() {
+    getAreaList().then((list) => {
+      // 这里需要确认拿的是广州数据，也就是广州市在第一个
+      const guangzhouData = list[0];
+      if (guangzhouData && guangzhouData?.children) {
+        const areaList = guangzhouData?.children.map((item) => {
+          return {
+            id: item.id,
+            name: item.name,
+          };
+        });
+        setAreaList(areaList);
+      }
+    });
+  }
+
+  useEffect(() => {
+    getAreaListFn();
+  }, []);
 
   return (
     <View className={s.SearchArea} key="duikou">
+      <Select
+        key="s3"
+        className={s.select}
+        idKey="id"
+        titleKey="name"
+        placeholder="所在区"
+        currentId={yixiangAreaId}
+        placeholderColor="#C6CBD1"
+        list={[{ id: 0, name: "不限" }, ...areaList]}
+        onSelect={(id) => {
+          if (id != 0) {
+            setYixiangAreaId(Number(id));
+          } else {
+            setYixiangAreaId(undefined);
+          }
+          hasLoadAll.current = false;
+          getList(true, searchText, id);
+        }}
+      />
       <SearchInput
         placeholder="请输入社区/路/街/巷/村/小区/大院/楼/栋/梯"
         value={searchText}
         onInput={(text) => {
           setSearchText(text);
-          // if (!text) {
-          //   setBeginSearch(false);
-          //   setSchoolList([]);
-          //   setSchoolCount(0);
-          // }
         }}
         onBlur={handleBlur}
         onConfirm={() => {}}
@@ -188,10 +211,11 @@ function duikou(props) {
       ) : (
         <SchoolList
           showDetail={true}
+          fuckList={fuckList.current}
           count={schoolCount}
           list={schoolList}
           currentTabIndex={1}
-          hightLightText={searchText}
+          hightLightText={hightLightText}
           name_status={name_status}
         />
       )}

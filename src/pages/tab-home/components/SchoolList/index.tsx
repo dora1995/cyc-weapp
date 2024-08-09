@@ -12,8 +12,9 @@ type Props = {
   list: Array<{ id: number; school_name: string; distance?: string }>;
   currentTabIndex: number;
   showDetail: boolean;
-  hightLightText?: string;
+  hightLightText?: string[];
   name_status?: number;
+  fuckList: any;
 };
 
 const map = {
@@ -25,8 +26,9 @@ export default ({
   count,
   currentTabIndex,
   showDetail = false,
-  hightLightText = "",
+  hightLightText = [],
   name_status = 1,
+  fuckList = [],
 }: Props) => {
   return (
     <View className={s.Wrapper}>
@@ -50,6 +52,7 @@ export default ({
                 hightLightText={hightLightText}
                 showDetail={showDetail}
                 item={item}
+                dd={fuckList[idx]}
               />
             );
           })}
