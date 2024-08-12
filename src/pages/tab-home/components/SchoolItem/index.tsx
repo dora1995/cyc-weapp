@@ -54,7 +54,7 @@ export default ({
   function highlightTerms(
     text,
     terms,
-    highlightFormat = `<span style="color:red;fontWeight: "bold", fontFamily: "MyFont">$&</span>`
+    highlightFormat = `<span style="color:red; font-weight: bold; font-family: MyFont">$&</span>`
   ) {
     // 按长度从长到短对terms数组进行排序，确保长的字段优先匹配
     terms.sort((a, b) => b.length - a.length);
@@ -103,7 +103,7 @@ export default ({
         <View className={s.SchoolName}>
           {fuckShowDetail ? (
             <MpHtml
-              content={makeText(item.school_name, hightLightText)}
+              content={`${makeText(item.school_name, hightLightText)}`}
             ></MpHtml>
           ) : (
             <View>{item.school_name}</View>
@@ -131,7 +131,12 @@ export default ({
         >
           {open ? (
             <>
-              <MpHtml content={makeText(fuck, hightLightText)}></MpHtml>
+              <MpHtml
+                content={`<p style="width: 100%; overflow: hidden;">${makeText(
+                  fuck,
+                  hightLightText
+                )}</p>`}
+              ></MpHtml>
               <View
                 onTap={handleCloseShow}
                 style={{
@@ -155,10 +160,13 @@ export default ({
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
-                  marginRight: "14px",
+                  marginRight: "10px",
                   height: "17px",
                 }}
-                content={makeText(dd, hightLightText)}
+                content={`<p style="width: 100%; overflow: hidden;">${makeText(
+                  dd,
+                  hightLightText
+                )}</p>`}
               ></MpHtml>
               <View
                 onTap={handleOpenShow}

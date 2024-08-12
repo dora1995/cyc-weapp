@@ -1,4 +1,4 @@
-import { View, Image } from "remax/one";
+import { View, Image, Text } from "remax/one";
 import React, { useEffect, useRef, useState } from "react";
 import s from "../index.scss";
 import WxLoading from "@/components/Loading";
@@ -209,15 +209,30 @@ function duikou(props) {
           </View>
         </>
       ) : (
-        <SchoolList
-          showDetail={true}
-          fuckList={fuckList.current}
-          count={schoolCount}
-          list={schoolList}
-          currentTabIndex={1}
-          hightLightText={hightLightText}
-          name_status={name_status}
-        />
+        <>
+          <SchoolList
+            showDetail={true}
+            fuckList={fuckList.current}
+            count={schoolCount}
+            list={schoolList}
+            currentTabIndex={1}
+            hightLightText={hightLightText}
+            name_status={name_status}
+          />
+          {schoolCount == 70 ? (
+            <View
+              style={{
+                fontSize: "12px",
+                color: "#96a5b9",
+                textAlign: "center",
+                fontFamily: "MyFont2",
+                marginBottom: "10px",
+              }}
+            >
+              (相关匹配结果过多，仅显示前70个结果)
+            </View>
+          ) : null}
+        </>
       )}
 
       {fetching && <WxLoading loading={true} />}

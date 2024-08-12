@@ -78,7 +78,7 @@ export default createPage((pageCtx) => {
   const [top, setTop] = useState(400);
   const [right, setRight] = useState(10);
 
-  const Education = { 1: "公办小学", 2: "民办小学", 3: "" };
+  const Education = { 1: "公办", 2: "民办", 3: "" };
   const dataList = [
     // { icon: Icon1, value: detail?.geo_position, label: "地址" },
     {

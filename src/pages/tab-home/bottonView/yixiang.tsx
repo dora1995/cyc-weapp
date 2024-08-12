@@ -121,7 +121,7 @@ function duikou() {
       });
       return;
     }
-    if (!currrentGrade) {
+    if (currrentGrade == undefined || currrentGrade == null) {
       wx.showToast({
         title: "请选择在读年级",
         icon: "none",

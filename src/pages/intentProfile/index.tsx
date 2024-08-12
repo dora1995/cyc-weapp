@@ -1,104 +1,102 @@
-import React, { useMemo, useState } from 'react'
-import { usePageEvent } from '@remax/macro'
-import { useQuery } from 'remax'
-import { View, Input } from 'remax/one'
-import { pages } from '@/app.config'
-import jumpUrl from '@/utils/jumpUrl'
-import { clearBindUserInfomationLock } from '@/utils/toBindUserInfomation'
-import { getBasicInfo, submitIntentProfile } from '@/api/auth'
-import createPage from '@/components/CreatePage'
-import NavBar from '@/components/NavBar'
-import Select from '@/components/Select'
-import Mselect from './components/Select'
-import CreateLocation from './components/Location'
-import UpdateButton from '@/components/UpdateUserInfo/Button'
-import UpdatePhoneButton from '@/components/UpdatePhoneInfo/Button'
-import s from './index.scss'
-import { getAreaList } from '@/api/area'
-import { IArea } from '../tab-home'
+import React, { useMemo, useState } from "react";
+import { usePageEvent } from "@remax/macro";
+import { useQuery } from "remax";
+import { View, Input } from "remax/one";
+import { pages } from "@/app.config";
+import jumpUrl from "@/utils/jumpUrl";
+import { clearBindUserInfomationLock } from "@/utils/toBindUserInfomation";
+import { getBasicInfo, submitIntentProfile } from "@/api/auth";
+import createPage from "@/components/CreatePage";
+import NavBar from "@/components/NavBar";
+import Select from "@/components/Select";
+import Mselect from "./components/Select";
+import CreateLocation from "./components/Location";
+import UpdateButton from "@/components/UpdateUserInfo/Button";
+import UpdatePhoneButton from "@/components/UpdatePhoneInfo/Button";
+import s from "./index.scss";
+import { getAreaList } from "@/api/area";
+import { IArea } from "../tab-home";
 
 export const jumpCallbackPage = (callback: string | undefined) => {
   if (callback) {
-    jumpUrl(callback, true)
+    jumpUrl(callback, true);
   } else {
-    jumpUrl(`/${pages[0]}`, true)
+    jumpUrl(`/${pages[0]}`, true);
   }
-}
+};
 export const jumpCallbackPageWithURI = (callback: string | undefined) => {
   // wx.navigateBack()
   if (callback) {
-    jumpCallbackPage(decodeURIComponent(callback))
+    jumpCallbackPage(decodeURIComponent(callback));
   } else {
-    jumpCallbackPage(undefined)
+    jumpCallbackPage(undefined);
   }
-}
+};
 
 export default createPage((pageCtx) => {
-  const [areaList, setAreaList] = useState<IArea[]>([])
+  const [areaList, setAreaList] = useState<IArea[]>([]);
   const [gradeList] = useState([
-    { grade: 1, title: '幼儿园小班' },
-    { grade: 2, title: '幼儿园中班' },
-    { grade: 3, title: '幼儿园大班' },
+    { grade: 1, title: "幼儿园小班" },
+    { grade: 2, title: "幼儿园中班" },
+    { grade: 3, title: "幼儿园大班" },
     // { grade: 4, title: '一年级' },
     // { grade: 5, title: '二年级' },
-  ] as const)
+  ] as const);
   const [is_intentlist] = useState([
-    { label: '文学美育' },
-    { label: '多元思维' },
-    { label: '双语文化' },
-    { label: '人工智能编程' },
-  ])
-  const [currrentAreaId, setCurrentAreaId] = useState(0)
-  const [intent_lession, setIntent_lession] = useState('')
-  const [phone, setPhone] = useState<any>('')
-  const [currrentGrade, setCurrentGrade] = useState(0)
-  const { callback } = useQuery()
-  const [locateElement, { locationCtx }] = CreateLocation()
-  const [showBindPhone, setShowBindPhone] = useState(false)
+    { label: "文学美育" },
+    { label: "多元思维" },
+    { label: "双语文化" },
+    { label: "人工智能编程" },
+  ]);
+  const [currrentAreaId, setCurrentAreaId] = useState(0);
+  const [intent_lession, setIntent_lession] = useState("");
+  const [phone, setPhone] = useState<any>("");
+  const [currrentGrade, setCurrentGrade] = useState(0);
+  const { callback } = useQuery();
+  const [locateElement, { locationCtx }] = CreateLocation();
+  const [showBindPhone, setShowBindPhone] = useState(false);
   const buttonElement = useMemo(() => {
     return (
       <UpdateButton
         updateBefore={async () => {
-          console.log(currrentGrade, currrentAreaId, phone)
-          if (!currrentGrade) {
-            pageCtx.alert('请选择在读年级')
-            return false
+          console.log(currrentGrade, currrentAreaId, phone);
+          if (currrentGrade == undefined || currrentGrade == null) {
+            pageCtx.alert("请选择在读年级");
+            return false;
           } else if (!currrentAreaId) {
-            pageCtx.alert('请选择当前居住区')
-            return false
+            pageCtx.alert("请选择当前居住区");
+            return false;
           } else if (!phone) {
-            pageCtx.alert('请输入手机号')
-            return false
+            pageCtx.alert("请输入手机号");
+            return false;
           } else if (!intent_lession) {
-            console.log('aaa', intent_lession)
-
-            pageCtx.alert('请选择意向课程')
-            return false
+            pageCtx.alert("请选择意向课程");
+            return false;
           } else {
             const areaName =
-              areaList.find((item) => item.id === currrentAreaId)?.name || ''
+              areaList.find((item) => item.id === currrentAreaId)?.name || "";
             try {
               await submitIntentProfile({
                 grade: currrentGrade,
                 phone: phone,
-                intent_lession: intent_lession.split(','),
+                intent_lession: intent_lession.split(","),
                 living_area: areaName,
-              })
-              return true
+              });
+              return true;
             } catch (err) {
-              pageCtx.setError(err)
-              return false
+              pageCtx.setError(err);
+              return false;
             }
           }
         }}
         onFailure={pageCtx.setError}
         onUpdated={() => {
-          wx.navigateBack()
+          wx.navigateBack();
         }}
       >
         提交意向信息
       </UpdateButton>
-    )
+    );
   }, [
     callback,
     currrentGrade,
@@ -108,47 +106,47 @@ export default createPage((pageCtx) => {
     phone,
     showBindPhone,
     intent_lession,
-  ])
+  ]);
 
   async function getAreaListFn() {
-    let areaList: any = []
+    let areaList: any = [];
     await getAreaList()
       .then((list) => {
         // 这里需要确认拿的是广州数据，也就是广州市在第一个
-        const guangzhouData = list[0]
+        const guangzhouData = list[0];
         if (guangzhouData && guangzhouData?.children) {
           areaList = guangzhouData?.children.map((item) => {
             return {
               id: item.id,
               name: item.name,
-            }
-          })
-          setAreaList(areaList)
+            };
+          });
+          setAreaList(areaList);
         }
       })
-      .catch(pageCtx.setError)
-    return areaList
+      .catch(pageCtx.setError);
+    return areaList;
   }
 
-  usePageEvent('onUnload', clearBindUserInfomationLock)
-  usePageEvent('onLoad', async () => {
-    const arr: any = await getAreaListFn()
+  usePageEvent("onUnload", clearBindUserInfomationLock);
+  usePageEvent("onLoad", async () => {
+    const arr: any = await getAreaListFn();
     getBasicInfo()
       .then((res: any) => {
-        console.log(res)
+        console.log(res);
 
-        setPhone(res.phone || '')
-        setCurrentGrade(Number(res.grade) || 0)
-        console.log('areaList', arr)
+        setPhone(res.phone || "");
+        setCurrentGrade(Number(res.grade) || 0);
+        console.log("areaList", arr);
 
         arr.forEach((item) => {
           if (item.name === res.living_area) {
-            setCurrentAreaId(item.id)
+            setCurrentAreaId(item.id);
           }
-        })
+        });
       })
-      .catch(pageCtx.setError)
-  })
+      .catch(pageCtx.setError);
+  });
 
   return (
     <>
@@ -168,7 +166,7 @@ export default createPage((pageCtx) => {
           placeholder="选择在读年级"
           placeholderColor="#C6CBD1"
           onSelect={(id) => {
-            setCurrentGrade(Number(id))
+            setCurrentGrade(Number(id));
           }}
         />
         <Select
@@ -180,17 +178,17 @@ export default createPage((pageCtx) => {
           list={areaList}
           placeholder="选择当前居住区"
           onSelect={(id) => {
-            console.log(id)
-            setCurrentAreaId(Number(id))
+            console.log(id);
+            setCurrentAreaId(Number(id));
           }}
         />
         <View className={s.input}>
           <Input
             value={phone}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             onInput={(e) => {
-              console.log(e.target.value)
-              setPhone(e.target.value)
+              console.log(e.target.value);
+              setPhone(e.target.value);
             }}
             placeholder="请输入手机号"
           />
@@ -204,12 +202,12 @@ export default createPage((pageCtx) => {
           list={is_intentlist}
           placeholder="选择意向课程"
           onSelect={(label) => {
-            console.log('bbbb', label)
-            setIntent_lession(label)
+            console.log("bbbb", label);
+            setIntent_lession(label);
           }}
         />
         {buttonElement}
       </View>
     </>
-  )
-})
+  );
+});

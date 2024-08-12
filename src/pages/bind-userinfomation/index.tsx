@@ -56,8 +56,7 @@ export default createPage((pageCtx) => {
     return (
       <UpdateButton
         updateBefore={async () => {
-          console.log(currrentGrade, currrentAreaId, locationCtx, is_intent);
-          if (!currrentGrade) {
+          if (currrentGrade == undefined || currrentGrade == null) {
             pageCtx.alert("请选择在读年级");
             return false;
           } else if (!currrentAreaId) {

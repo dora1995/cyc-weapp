@@ -142,8 +142,8 @@ function duikou(props) {
           currentId={currentNature}
           list={[
             { id: 0, name: "不限" },
-            { id: 1, name: "公办小学" },
-            { id: 2, name: "民办小学" },
+            { id: 1, name: "公办" },
+            { id: 2, name: "民办" },
           ]}
           placeholder="办学性质"
           onSelect={(id) => {

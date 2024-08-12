@@ -531,8 +531,8 @@ export default createPage((pageCtx) => {
                 currentId={currentNature}
                 list={[
                   { id: 0, name: "全部" },
-                  { id: 1, name: "公办小学" },
-                  { id: 2, name: "民办小学" },
+                  { id: 1, name: "公办" },
+                  { id: 2, name: "民办" },
                 ]}
                 placeholder="请选择"
                 onSelect={(id) => {
