@@ -107,6 +107,19 @@ function duikou(props) {
     getList(false);
   });
 
+  usePageEvent("onShareAppMessage", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=0",
+    };
+  });
+  usePageEvent("onShareTimeline", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=0",
+    };
+  });
+
   useEffect(() => {
     hasLoadAll.current = false;
     if (locationCtx) {

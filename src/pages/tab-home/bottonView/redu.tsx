@@ -113,6 +113,19 @@ function duikou(props) {
     getList(true, searchText, currrentAreaId, currentNature);
   }, []);
 
+  usePageEvent("onShareAppMessage", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=2",
+    };
+  });
+  usePageEvent("onShareTimeline", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=2",
+    };
+  });
+
   return (
     <View className={s.SearchArea} key="redu">
       <View className={s.searchRow}>

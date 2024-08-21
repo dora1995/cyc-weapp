@@ -149,40 +149,6 @@ export default createPage((pageCtx) => {
     wx.navigateTo({ url: "/pages/intentProfile/index" });
   }
 
-  // function handleTouchstart(e) {
-  //   console.log(e);
-  //   e.stopPropagation();
-  //   setMove(true);
-  //   return false;
-  // }
-  // function handleTouchMove(e) {
-  //   console.log(e);
-  //   e.stopPropagation();
-  //   // 在滚动时，禁止页面滚动
-
-  //   if (move) {
-  //     const changedTouches = e.changedTouches[0];
-  //     const { clientY } = changedTouches;
-  //     setTop(clientY);
-  //   }
-  //   return false;
-  // }
-  // function handleTouchend(e) {
-  //   setMove(false);
-  //   e.stopPropagation();
-  //   return false;
-  // }
-  function handleShow(e) {
-    e.stopPropagation();
-    if (right === -26) {
-      setRight(10);
-      setTimeout(() => {
-        setRight(-26);
-      }, 3000);
-    }
-    return false;
-  }
-
   if (!detail) {
     return <></>;
   }

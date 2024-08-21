@@ -10,6 +10,7 @@ import { getAreaList } from "@/api/area";
 import UpdatePhoneButton from "@/components/UpdatePhoneInfo/Button";
 import { getBasicInfo, submitIntentSurvey } from "@/api/auth";
 import { getStorageSync, setStorageSync } from "remax/wechat";
+import { usePageEvent } from "remax/macro";
 interface ISchool {
   id: number;
   school_name: string;
@@ -256,6 +257,19 @@ function duikou() {
     }
     return true;
   }, [yixiangAreaId]);
+
+  usePageEvent("onShareAppMessage", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=3",
+    };
+  });
+  usePageEvent("onShareTimeline", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=3",
+    };
+  });
 
   return (
     <View className={s.SearchArea} key="yixiang">

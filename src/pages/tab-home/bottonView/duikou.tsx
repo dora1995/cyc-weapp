@@ -1,5 +1,11 @@
 import { View, Image, Text } from "remax/one";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import s from "../index.scss";
 import WxLoading from "@/components/Loading";
 import { useMemoizedFn, useUpdateEffect } from "ahooks";
@@ -147,6 +153,35 @@ function duikou(props) {
   useEffect(() => {
     getAreaListFn();
   }, []);
+  const _areaList = useMemo(() => {
+    return [{ id: 0, name: "不限" }, ...areaList];
+  }, [areaList]);
+
+  const _areaSelect = useCallback(
+    (id) => {
+      if (id != 0) {
+        setYixiangAreaId(Number(id));
+      } else {
+        setYixiangAreaId(undefined);
+      }
+      hasLoadAll.current = false;
+      getList(true, searchText, id);
+    },
+    [areaList, searchText]
+  );
+
+  usePageEvent("onShareAppMessage", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=1",
+    };
+  });
+  usePageEvent("onShareTimeline", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=1",
+    };
+  });
 
   return (
     <View className={s.SearchArea} key="duikou">
@@ -158,16 +193,8 @@ function duikou(props) {
         placeholder="所在区"
         currentId={yixiangAreaId}
         placeholderColor="#C6CBD1"
-        list={[{ id: 0, name: "不限" }, ...areaList]}
-        onSelect={(id) => {
-          if (id != 0) {
-            setYixiangAreaId(Number(id));
-          } else {
-            setYixiangAreaId(undefined);
-          }
-          hasLoadAll.current = false;
-          getList(true, searchText, id);
-        }}
+        list={_areaList}
+        onSelect={_areaSelect}
       />
       <SearchInput
         placeholder="请输入社区/路/街/巷/村/小区/大院/楼/栋/梯"

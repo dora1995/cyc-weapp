@@ -33,7 +33,6 @@ export default createPage((pageCtx) => {
   function imgClick() {
     wx.navigateTo({ url: "/pages/intentProfile/index" });
   }
-
   return (
     <View className={s.Page}>
       <NavBar

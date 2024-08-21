@@ -4,6 +4,7 @@ import s from "../index.scss";
 import { getGroupchat, searchSchool } from "@/api/school";
 import downIcon from "@/imgs/icon_groupchat_download@2x.png";
 import friendIcon from "@/imgs/icon_groupchat_share@2x.png";
+import { usePageEvent } from "remax/macro";
 
 function duikou() {
   function getImg() {
@@ -101,6 +102,18 @@ function duikou() {
   useEffect(() => {
     getImg();
   }, []);
+  usePageEvent("onShareAppMessage", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=4",
+    };
+  });
+  usePageEvent("onShareTimeline", () => {
+    return {
+      title: "广州小学信息查一查",
+      path: "pages/tab-home/index?tabIndex=4",
+    };
+  });
   return (
     <View className={s.SearchArea} key="jinqun">
       <View className={s.intoQr}>

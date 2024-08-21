@@ -104,7 +104,7 @@ export default memo(
         <WindowLayout
           zIndex={9999}
           show={showLayout}
-          onTapBackground={() => setTimeout(() => setShowLayout(false), 100)}
+          onTapBackground={() => setShowLayout(false)}
         >
           <ScrollView scrollY className={s.SelectList}>
             {listItems}
